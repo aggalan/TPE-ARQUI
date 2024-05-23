@@ -51,7 +51,7 @@ VBEInfoPtr VBE_mode_info = (VBEInfoPtr) 0x0000000000005C00;
 uint32_t posX = MARGIN;
 uint32_t posY = MARGIN;
 
-int size = 2;
+int size = 1;
 
 uint64_t defaultFColor = WHITE;
 uint64_t defaultBColor = BLACK;
@@ -81,7 +81,7 @@ void clear() {
 
 void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
     if (posX >= VBE_mode_info->width-16-MARGIN && posY >= VBE_mode_info->height-32-MARGIN) {
-        return;
+        move_screen();
     }
 
     if (c == ' ') {
@@ -191,7 +191,7 @@ void backspace() {
 
 void newline() {
     if (posY >= VBE_mode_info->height-32-MARGIN) {
-        return;
+        move_screen();
     }
     posX = MARGIN;
     posY += 16;
@@ -231,4 +231,27 @@ void clearColor(uint64_t color){
     posX = MARGIN;
     posY = MARGIN;
 
+}
+
+void move_screen() {
+    posY -= 16;
+
+    uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
+
+    for (int i = MARGIN + 16; i < VBE_mode_info->height; i++) {
+        for (int j = MARGIN; j < VBE_mode_info->width; j++) {
+
+            uint64_t offset = (j * ((VBE_mode_info->bpp)/8)) + (i * VBE_mode_info->pitch);
+
+            uint8_t blue = framebuffer[offset];
+            uint8_t green = framebuffer[offset + 1];
+            uint8_t red = framebuffer[offset + 2];
+
+            uint64_t hexColor = (red << 16) | (green << 8) | blue;
+
+            putPixel(hexColor, j, i-16 );
+
+
+        }
+    }
 }

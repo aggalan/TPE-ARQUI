@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <keyboardBuffer.h>
-#include <videoDriver.h>s
+#include <videoDriver.h>
 
 static struct kbuff buff = {0, 0, {'\0'}};
 static buffer_ptr ptr = &buff;
