@@ -80,7 +80,7 @@ void clear() {
 }
 
 void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
-    if (posX >= VBE_mode_info->width-16-MARGIN && posY >= VBE_mode_info->height-32-MARGIN) {
+    if (posX >= VBE_mode_info->width-(16*size)-MARGIN && posY >= VBE_mode_info->height-(32*size)-MARGIN) {
         move_screen();
     }
 
@@ -96,35 +96,13 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
 
     int cx, cy;
     int pos = c - 33;
-    for (cy = 0; cy < 16; cy++) {
-        int maskCheck = 0x01;
-        for (cx = 0; cx < 10; cx++) {
-            if (((font[(pos*32) + (2*cy)] & (maskCheck << cx)) != 0) && cx < 8) {
-                putPixel(fcolor, cx + posX, cy + posY);
-            } else {
-                putPixel(bcolor, cx + posX, cy + posY);
-            }
-        }
-    }
-    if (posX >= VBE_mode_info->width-MARGIN-16) {
-        posY += 16;
-        posX = MARGIN;
-        return;
-    }
-
-    posX += 10;
-
-
 //    for (cy = 0; cy < 16; cy++) {
 //        int maskCheck = 0x01;
 //        for (cx = 0; cx < 10; cx++) {
 //            if (((font[(pos*32) + (2*cy)] & (maskCheck << cx)) != 0) && cx < 8) {
-//                putPixel(fcolor, cx*size + posX, cy*size + posY);
-//                putPixel(fcolor, cx*size + 1 + posX, cy*size + 1 + posY);
-//            }
-//            else {
-//                putPixel(bcolor, cx*size + posX, cy*size + posY);
-//                putPixel(bcolor, cx*size + 1 + posX, cy*size + 1 + posY);
+//                putPixel(fcolor, cx + posX, cy + posY);
+//            } else {
+//                putPixel(bcolor, cx + posX, cy + posY);
 //            }
 //        }
 //    }
@@ -134,7 +112,35 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
 //        return;
 //    }
 //
-//    posX += 10*size;
+//    posX += 10;
+
+
+    for (cy = 0; cy < 16; cy++) {
+        int maskCheck = 0x01;
+        for (cx = 0; cx < 10; cx++) {
+            if (((font[(pos*32) + (2*cy)] & (maskCheck << cx)) != 0) && cx < 8) {
+
+                for (int z = 0; z < size; z++) {
+                    putPixel(fcolor, cx*size + posX + z, cy*size + posY);
+                }
+
+            }
+            else {
+
+                for (int w = 0; w < size; w++) {
+                    putPixel(bcolor, cx*size + posX + w, cy*size + posY);
+                }
+
+            }
+        }
+    }
+    if (posX >= VBE_mode_info->width-MARGIN-(16*size)) {
+        posY += 16*size;
+        posX = MARGIN;
+        return;
+    }
+
+    posX += 10*size;
 
 }
 
@@ -160,11 +166,11 @@ void fill(uint64_t x, uint64_t y, uint64_t color) {
 }
 
 void transparent_space() {
-    if (posX >= VBE_mode_info->width-10) {
-        posY += 16;
-        posX = 10;
+    if (posX >= VBE_mode_info->width-(10*size)) {
+        posY += 16*size;
+        posX = MARGIN + 10*size;
     } else {
-        posX += 10;
+        posX += 10*size;
     }
 }
 
@@ -177,24 +183,24 @@ void backspace() {
         return;
     }
     if (posX <= MARGIN) {
-        posX = VBE_mode_info->width-MARGIN-6;
-        posY -= 16;
+        posX = VBE_mode_info->width-MARGIN-(6*size);
+        posY -= 16*size;
     }
     int i, j;
-    for (i = 0; i < 16; i++) {
-        for (j = 0; j < 10; j++) {
+    for (i = 0; i < 16*size; i++) {
+        for (j = 0; j < 10*size; j++) {
             putPixel(0, posX - j - 1, posY + i);
         }
     }
-    posX -= 10;
+    posX -= 10*size;
 }
 
 void newline() {
-    if (posY >= VBE_mode_info->height-32-MARGIN) {
+    if (posY >= VBE_mode_info->height-(32*size)-MARGIN) {
         move_screen();
     }
     posX = MARGIN;
-    posY += 16;
+    posY += 16*size;
 }
 
 void drawWordColorLen(char * string, uint64_t fcolor, uint64_t bcolor, int len){
@@ -234,11 +240,11 @@ void clearColor(uint64_t color){
 }
 
 void move_screen() {
-    posY -= 16;
+    posY -= 16*size;
 
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
 
-    for (int i = MARGIN + 16; i < VBE_mode_info->height; i++) {
+    for (int i = MARGIN + (16*size); i < VBE_mode_info->height + 16; i++) {
         for (int j = MARGIN; j < VBE_mode_info->width; j++) {
 
             uint64_t offset = (j * ((VBE_mode_info->bpp)/8)) + (i * VBE_mode_info->pitch);
@@ -249,7 +255,7 @@ void move_screen() {
 
             uint64_t hexColor = (red << 16) | (green << 8) | blue;
 
-            putPixel(hexColor, j, i-16 );
+            putPixel(hexColor, j, i- (16*size) - size );
 
 
         }
