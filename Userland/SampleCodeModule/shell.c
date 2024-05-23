@@ -48,13 +48,13 @@ void bufferize(){
             read_command(buff);
             return;
         } else{
-            if(!end_buff) {
+            if(!end_buff && c != 0) {
                 buff[i++] = c;
             }else {
                 flag = 1;
             }
         }
-        if(!flag) {
+        if(!flag && c != 0) {
             putCh(c);
         }
 

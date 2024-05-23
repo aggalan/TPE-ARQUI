@@ -22,10 +22,12 @@ void size_up();
 void size_down();
 void fontSize();
 void intToStr(int value, char* str, int base);
+void drawChar(char c);
 
 #define RED 0xFF0000
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
 #define MARGIN 10
 #define DEFAULT_FONT_SIZE 1
+#define isMinusc(x) ((x) <= 'a' ? (((x)>= 'z')?1:0):0)
 #endif

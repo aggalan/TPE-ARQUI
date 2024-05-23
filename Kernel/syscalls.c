@@ -24,7 +24,6 @@ void sys_read(char * c, int len, int fd){
 
     if (fd == 0) {
         char aux = 0;
-        // int pos = get_pos();
         for (i = 0; i < len;) {
             _hlt();
             aux = getBuffAtCurrent();

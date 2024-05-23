@@ -90,6 +90,9 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
 
     int cx, cy;
     int pos = c - 33;
+    if(isMinusc(c)){
+        pos = c - 'a';
+    }
 //    for (cy = 0; cy < 16; cy++) {
 //        int maskCheck = 0x01;
 //        for (cx = 0; cx < 10; cx++) {
