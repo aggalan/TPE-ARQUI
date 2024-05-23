@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "invalidOp.h"
 
-static char commands[COMMANDS_SIZE][14] = {"HELP", "TIME", "REGSTATE", "DIVZERO", "INVALIDOP", "ELIMINATOR", "RESIZE", "CLEAR" };
+static char commands[COMMANDS_SIZE][14] = {"HELP", "TIME", "REGSTATE", "DIVZERO", "INVALIDOP", "ELIMINATOR", "INCFONT", "DECFONT","FONT", "CLEAR" };
 
 void seek_command(char * buff){
     for(int i = 0; i < COMMANDS_SIZE; i++){
@@ -14,7 +14,7 @@ void seek_command(char * buff){
             return;
         } 
     }
-    call_command(-1, buff); //no se encontro
+    call_command(-1, buff); 
 }
 
 void call_command(int i, char * command){
@@ -37,8 +37,14 @@ void call_command(int i, char * command){
         case ELIMINATOR:;
             //eliminator(); //falta hacer jueguito
             return;
-        case RESIZE:;
-            call_change_size(); //fata hacer backend
+        case INCFONT:;
+            call_size_up();
+            return;
+        case DECFONT:;
+            call_size_down();
+            return;
+        case FONT:;
+            call_font();
             return;
         case CLEAR:;
             call_clear(); 

@@ -1,7 +1,7 @@
 #ifndef _COMMANDS_H_
 #define _COMMANDS_H_
 
-#define COMMANDS_SIZE 8
+#define COMMANDS_SIZE 10
 
 void seek_command(char * buff);
 void call_command(int i, char * command);
@@ -17,8 +17,11 @@ enum Commands {
     DIVZERO,
     INVALIDOP,
     ELIMINATOR,
-    RESIZE,
+    INCFONT,
+    DECFONT,
+    FONT,
     CLEAR
+
 };
 
 

@@ -41,25 +41,21 @@ int strcmp(char * str1, char * str2){
 }
 
 
-int strcmpspace(char * str1, char * str2){
-    char partition[BUFFERLIMIT];
-    int j = 0;
-    for (; str2[j] != '\0' && str2[j] != ' '; j++){
-        partition[j]=str2[j];
+int strcmpspace(char *str1, char *str2) {
+    // Compare characters up to the first space in both strings
+    int i = 0;
+    while (str1[i] != '\0' && str2[i] != '\0' && !null_or_space(str2[i])) {
+        if (str1[i] != str2[i]) {
+            return str1[i] > str2[i] ? 1 : -1;
+        }
+        i++;
     }
-    partition[j+1]=0;
-	int i = 0;
-	for (; str1[i] != '\0' && !null_or_space(partition[i]); i++){
-		if (str1[i] > str2[i]){
-			return 1;
-		} else if (str1[i] < str2[i]){
-			return -1;
-		}
-	}
-	if (str1[i] == '\0' && null_or_space(partition[i])) {
+    // If str2 contains space, compare up to that space
+    if (str1[i] == '\0' && null_or_space(str2[i])) {
         return 0;
-    } else if (null_or_space(partition[i])) {
-        return -1; 
-    } else return 1;
-
+    } else if (null_or_space(str2[i])) {
+        return -1;
+    } else {
+        return 1;
+    }
 }

@@ -17,9 +17,14 @@ void drawWordColorLen(char * string, uint64_t fcolor, uint64_t bcolor, int len);
 void invalidFD();
 void drawRegister(int valueReg);
 void clearColor(uint64_t color);
+void move_screen();
+void size_up();
+void size_down();
+void fontSize();
 
 #define RED 0xFF0000
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
 #define MARGIN 10
+#define DEFAULT_FONT_SIZE 1
 #endif

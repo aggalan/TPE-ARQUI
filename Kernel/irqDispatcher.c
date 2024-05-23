@@ -46,9 +46,16 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 				printRegistersASM(); 
 				break;
 		case 5: 
-				//change_size();
+				size_up();
 				break;
 		case 6: 
+				size_down();
+				break;
+		case 7: 
 				clear();
+				break;
+		case 8:
+				fontSize();
+				break;
 	}
 }

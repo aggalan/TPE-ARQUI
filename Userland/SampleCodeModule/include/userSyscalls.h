@@ -12,5 +12,7 @@ void call_sys_write(char *buf, int size, int fd);
 void call_timeClock(char *buf);
 void call_regState();
 void call_clear();
-void call_resize();
+void call_size_up();
+void call_size_down();
+void call_font();
 #endif

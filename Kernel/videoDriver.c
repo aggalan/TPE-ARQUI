@@ -51,7 +51,7 @@ VBEInfoPtr VBE_mode_info = (VBEInfoPtr) 0x0000000000005C00;
 uint32_t posX = MARGIN;
 uint32_t posY = MARGIN;
 
-int size = 1;
+int size = DEFAULT_FONT_SIZE;
 
 uint64_t defaultFColor = WHITE;
 uint64_t defaultBColor = BLACK;
@@ -260,4 +260,31 @@ void move_screen() {
 
         }
     }
+}
+
+void size_up(){
+    if(size == 3){
+        drawWordColor("ERROR - Font size already at 3\n", WHITE, RED);
+        return;
+    }else{
+        size++;
+    }
+    return;
+}
+
+void size_down(){
+    if(size == 1){
+        drawWordColor("ERROR - Font size already at 1\n", WHITE, RED);
+        return;
+    }else{
+        size--;
+    }
+    return;
+}
+void fontSize(){
+    drawWordColor("FONTSIZE AT ", WHITE, BLACK);
+    drawWord(size);
+    drawWord("NO FUNCIONA CABLEAR BIEN");
+    drawchar_color('\n', WHITE, BLACK);
+    
 }

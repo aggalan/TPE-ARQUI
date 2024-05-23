@@ -2,8 +2,10 @@ GLOBAL call_sys_write
 GLOBAL call_sys_read
 GLOBAL call_reg_state
 GLOBAL call_time_clock
-GLOBAL call_change_size
+GLOBAL call_size_up
+GLOBAL call_size_down
 GLOBAL call_clear
+GLOBAL call_font
 
 section .text
 
@@ -29,7 +31,11 @@ call_time_clock:
     call_handler 3
 call_reg_state:
     call_handler 4
-call_change_size:
+call_size_up:
     call_handler 5
-call_clear:
+call_size_down:
     call_handler 6
+call_clear:
+    call_handler 7
+call_font:
+    call_handler 8
