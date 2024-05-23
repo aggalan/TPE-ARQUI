@@ -28,11 +28,7 @@ void sys_read(char * c, int len, int fd){
             _hlt();
             aux = getBuffAtCurrent();
             if (aux > 0 && aux <= 255) {
-                if (aux == 0x39) {
-                    c[i++] = ' ';
-                } else {
-                    c[i++] = ScanCodes[(int) aux];
-                }
+                c[i++] = ScanCodes[(int)aux];
                 consume();
             }
 
