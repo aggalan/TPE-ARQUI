@@ -65,7 +65,7 @@ void putPixel(uint64_t hexColor, uint64_t x, uint64_t y) {
 }
 
 void drawchar_transparent(char c, uint64_t fcolor) {
-    drawchar_color(c, fcolor, 0x00000000);
+    drawchar_color(c, fcolor, BLACK);
 }
 
 void clear() {
@@ -86,12 +86,6 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
 
     if (c == ' ') {
         fcolor = bcolor;
-    }else if (c == '\n') {
-        newline();
-        return;
-    }else if (c == '\t') {
-        drawWord("  ");
-        return;
     }
 
     int cx, cy;
@@ -145,25 +139,39 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
 }
 
 
+void character(char character, uint64_t fcolor, uint64_t bcolor){
+    if(character == '\b'){
+        backspace();
+        return;
+    }
+    if(character == '\n'){
+        newline();
+        return;
+    }
+    if(character == '\t'){
+        tab();
+        return;
+    }
 
+    drawchar_color(character, fcolor, bcolor);
+    return;
+}
 
 void drawWord(char * string) {
-    int i;
-    for (i = 0; string[i] != '\0'; i++) {
-        drawchar_color(string[i], defaultFColor, defaultBColor);
-    }
+    drawWordColor(string, defaultFColor, defaultBColor);
 }
+
 
 void drawWordColor(char * string, uint64_t fColor, uint64_t bColor){
     for(int i = 0; string[i] != 0; i++){
-        drawchar_color(string[i], fColor, bColor);
+        character(string[i], fColor, bColor);
     }
 
 }
 
-void fill(uint64_t x, uint64_t y, uint64_t color) {
+// void fill(uint64_t x, uint64_t y, uint64_t color) {
 
-}
+// }
 
 void transparent_space() {
     if (posX >= VBE_mode_info->width-(10*size)) {
@@ -172,6 +180,10 @@ void transparent_space() {
     } else {
         posX += 10*size;
     }
+}
+
+void drawChar(char c){
+    character(c, defaultFColor, defaultBColor);
 }
 
 void tab(){
@@ -205,13 +217,13 @@ void newline() {
 
 void drawWordColorLen(char * string, uint64_t fcolor, uint64_t bcolor, int len){
     for(int i = 0; i < len && string[i] != 0; i++){
-        drawchar_color(string[i], fcolor, bcolor );
+        character(string[i], fcolor, bcolor );
     }
 }
 
 void drawWordLen(char * string, int len){
         for(int i = 0; i < len && string[i] != 0; i++){
-        drawchar_color(string[i], defaultFColor, defaultBColor );
+        character(string[i], defaultFColor, defaultBColor );
     }
 }
 
@@ -281,10 +293,32 @@ void size_down(){
     }
     return;
 }
-void fontSize(){
-    drawWordColor("FONTSIZE AT ", WHITE, BLACK);
-    drawWord(size);
-    drawWord("NO FUNCIONA CABLEAR BIEN");
-    drawchar_color('\n', WHITE, BLACK);
-    
+void fontSize() {
+    char sizeStr[12];  
+    intToStr(size, sizeStr, 10);  
+
+    drawWordColor("FONTSIZE is ", WHITE, BLACK);
+    drawWord(sizeStr);
+    drawChar('\n');
+}
+
+void intToStr(int value, char* str, int base) {
+    char* ptr = str;
+    char* ptr1 = str;
+    char tmp_char;
+    int tmp_value;
+
+    do {
+        tmp_value = value;
+        value /= base;
+        *ptr++ = "0123456789"[tmp_value - value * base];
+    } while (value);
+
+    *ptr-- = '\0';
+
+    while (ptr1 < ptr) {
+        tmp_char = *ptr;
+        *ptr-- = *ptr1;
+        *ptr1++ = tmp_char;
+    }
 }

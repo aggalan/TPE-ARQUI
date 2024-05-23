@@ -21,6 +21,7 @@ void move_screen();
 void size_up();
 void size_down();
 void fontSize();
+void intToStr(int value, char* str, int base);
 
 #define RED 0xFF0000
 #define WHITE 0xFFFFFF

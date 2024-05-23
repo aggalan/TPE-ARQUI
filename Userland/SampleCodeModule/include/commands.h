@@ -19,7 +19,7 @@ enum Commands {
     ELIMINATOR,
     INCFONT,
     DECFONT,
-    FONT,
+    FONTSIZE,
     CLEAR
 
 };

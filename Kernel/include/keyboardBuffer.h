@@ -21,5 +21,7 @@ uint16_t * get_buff();
 char getBuffAtCurrent();
 void consume_char();
 int buffer_len();
+void setPos(int newPos);
+
 
 #endif

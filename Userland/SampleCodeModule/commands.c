@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "invalidOp.h"
 
-static char commands[COMMANDS_SIZE][14] = {"HELP", "TIME", "REGSTATE", "DIVZERO", "INVALIDOP", "ELIMINATOR", "INCFONT", "DECFONT","FONT", "CLEAR" };
+static char commands[COMMANDS_SIZE][14] = {"HELP", "TIME", "REGSTATE", "DIVZERO", "INVALIDOP", "ELIMINATOR", "INCFONT", "DECFONT","FONTSIZE", "CLEAR" };
 
 void seek_command(char * buff){
     for(int i = 0; i < COMMANDS_SIZE; i++){
@@ -43,7 +43,7 @@ void call_command(int i, char * command){
         case DECFONT:;
             call_size_down();
             return;
-        case FONT:;
+        case FONTSIZE:;
             call_font();
             return;
         case CLEAR:;

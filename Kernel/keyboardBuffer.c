@@ -25,6 +25,10 @@ int buffer_len(){
     return buff.len;
 }
 
+void setPos(int newPos){
+    buff.pos = newPos;
+}
+
 void buffer_clear(int i) {
 
     if (i == 1) {

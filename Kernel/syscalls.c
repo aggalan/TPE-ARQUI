@@ -24,14 +24,15 @@ void sys_read(char * c, int len, int fd){
 
     if (fd == 0) {
         char aux = 0;
+        // int pos = get_pos();
         for (i = 0; i < len;) {
             _hlt();
             aux = getBuffAtCurrent();
-            if (aux != '\0') {
+            if (aux > 0 && aux <= 255) {
                 if (aux == 0x39) {
                     c[i++] = ' ';
                 } else {
-                    c[i++] = aux;
+                    c[i++] = ScanCodes[(int) aux];
                 }
                 consume();
             }

@@ -14,11 +14,21 @@ void keyboard_handler(){
     if (key == 0) {
         return;
     }
-    if(key == 0x39){
-       buffer_append(key);
-       return;
+    // if(key == 0x39){
+    //    buffer_append(key);
+    //    return;
+    // }
+
+    uint16_t * buff = get_buff();
+    int pos = get_pos();
+
+    if(pos + 1 < BUFFER_LIMIT){
+        setPos(pos + 1);
+        buff[pos+1] = 0;
+    }else{
+        setPos(0);
+        buff[0] = 0;
     }
-    
     
     if(ScanCodes[key] == ';'){
         saveRegState();
@@ -26,20 +36,25 @@ void keyboard_handler(){
         return;
     }
 
-    if (key >= 0 && key < 256 && ScanCodes[key] != 0) {
-        buffer_append(ScanCodes[key]);
-        if(ScanCodes[key] == '\b'){
-            buffer_backspace();
-        }
-        if (ScanCodes[key] == '\n') {
-            buffer_clear(2);
-        }
-        if(ScanCodes[key] == '\t'){
-            tab();
-        }
+    buff[pos] = key;
+    
+    
 
-        return;
-    }
+
+    // if (key >= 0 && key < 256 && ScanCodes[key] != 0) {
+    //     buffer_append(ScanCodes[key]);
+    //     if(ScanCodes[key] == '\b'){
+    //         buffer_backspace();
+    //     }
+    //     if (ScanCodes[key] == '\n') {
+    //         buffer_clear(2);
+    //     }
+    //     if(ScanCodes[key] == '\t'){
+    //         tab();
+    //     }
+
+    //     return;
+    // }
 
     
 }
