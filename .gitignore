@@ -1,0 +1,11 @@
+*.bin
+*.sys
+*.sh
+
+#The images
+*.img
+*.qcow2
+*.vmdk
+
+#Object files
+*.o
