@@ -73,19 +73,19 @@
     0,   // 0x44 - (F10)
     0,   // 0x45 - Num Lock
     0,   // 0x46 - Scroll Lock
-    '7', // 0x47 - Numpad 7
-    '^', // 0x48 - Numpad 8
-    '9', // 0x49 - Numpad 9
-    '-', // 0x4A - Numpad '-'
-    '4', // 0x4B - Numpad 4
-    '5', // 0x4C - Numpad 5
-    '6', // 0x4D - Numpad 6
-    '+', // 0x4E - Numpad '+'
-    '1', // 0x4F - Numpad 1
-    'v', // 0x50 - Numpad 2
-    '3', // 0x51 - Numpad 3
-    '0', // 0x52 - Numpad 0
-    '.', // 0x53 - Numpad '.'
+    0, // 0x47 - Numpad 7
+    0, // 0x48 - Numpad 8
+    0, // 0x49 - Numpad 9
+    0, // 0x4A - Numpad '-'
+    0, // 0x4B - Numpad 4
+    0, // 0x4C - Numpad 5
+    0, // 0x4D - Numpad 6
+    0, // 0x4E - Numpad '+'
+    0, // 0x4F - Numpad 1
+    0, // 0x50 - Numpad 2
+    0, // 0x51 - Numpad 3
+    0, // 0x52 - Numpad 0
+    0, // 0x53 - Numpad '.'
     0,   // 0x54 - (Unused)
     0,   // 0x55 - (Unused)
     0,   // 0x56 - (Unused)
