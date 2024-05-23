@@ -190,7 +190,7 @@ void drawChar(char c){
 }
 
 void tab(){
-    drawWord("   ");
+    drawWord("  ");
  }
 
 void backspace() {

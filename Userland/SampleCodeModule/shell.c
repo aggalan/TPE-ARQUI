@@ -10,7 +10,7 @@ static char buff[BUFFERLIMIT] = {0};
 
 void welcome_message(){
     //call_paint_screen(BLACK);
-    char welcome_message[] = "Wellcome to The Shell.\nInput a command: \n(Enter HELP to see full list of commands)\n";
+    char welcome_message[] = "Welcome to The Shell.\nInput a command: \n(Enter HELP to see full list of commands)\n";
     for(int i = 0; welcome_message[i] != 0; i++){
         putCh(welcome_message[i]);
     }

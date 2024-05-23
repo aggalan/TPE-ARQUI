@@ -14,7 +14,7 @@ struct kbuff {
 typedef struct kbuff * buffer_ptr;
 
 void buffer_append(char c);
-void buffer_clear(int i);
+void buffer_clear();
 void buffer_backspace();
 int get_pos();
 uint16_t * get_buff();

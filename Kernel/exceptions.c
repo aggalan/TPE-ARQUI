@@ -17,7 +17,7 @@ void exceptionDispatcher(int exception, registerStruct * registers) {
 	drawWordColor("Press a key to continue",WHITE, RED);
 	char c;
 	sys_read(&c, 1, 0);
-    buffer_clear(2);
+    buffer_clear();
 }
 
  void zero_division() {

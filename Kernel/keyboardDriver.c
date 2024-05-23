@@ -18,25 +18,14 @@ void keyboard_handler(){
     //    buffer_append(key);
     //    return;
     // }
-
-    uint16_t * buff = get_buff();
-    int pos = get_pos();
-
-    if(pos + 1 < BUFFER_LIMIT){
-        setPos(pos + 1);
-        buff[pos+1] = 0;
-    }else{
-        setPos(0);
-        buff[0] = 0;
-    }
     
     if(ScanCodes[key] == ';'){
         saveRegState();
         register_snapshot_taken = 1;
         return;
     }
+    buffer_append(key);
 
-    buff[pos] = key;
     
     
 

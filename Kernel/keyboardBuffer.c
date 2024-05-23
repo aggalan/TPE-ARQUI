@@ -14,7 +14,6 @@ void buffer_append(char c) {
         buff.buffer[buff.pos] = c;
         buff.buffer[buff.pos + 1] = 0;
         buff.pos = 0;
-        buffer_clear(1);
     }
     if (c != '\b' && c != '\0') {
         buff.len += 1;
@@ -29,44 +28,8 @@ void setPos(int newPos){
     buff.pos = newPos;
 }
 
-void buffer_clear(int i) {
-
-    if (i == 1) {
-        int j;
-        for (j = 0; j<BUFFER_LIMIT; j++) {
-            buff.buffer[j] = '\0';
-        }
-    } else if (i == 2) {
-        buff.len = 0;
-    }
-}
-//
-void buffer_backspace() {
-    if (buff.len > 0) {
-        if (buff.pos <= 1) {
-            buff.pos == BUFFER_LIMIT - 1;
-            buff.buffer[1] = '\0';
-            buff.buffer[0] = '\b';
-        } else {
-            buff.pos -= 1;
-            buff.buffer[buff.pos] = buff.buffer[buff.pos+1];
-            buff.buffer[buff.pos+1] = '\0';
-        }
-
-        buff.len -= 1;
-
-        backspace();
-    } else if (buff.len == 0) {
-        if (buff.pos == 0) {
-            buff.pos = BUFFER_LIMIT-1;
-            buff.buffer[BUFFER_LIMIT-1] = '\0';
-        } else {
-            buff.pos -= 1;
-            buff.buffer[buff.pos] = '\0';
-        }
-    }
-
-
+void buffer_clear() {
+    buff.len = 0;
 }
 
 int get_pos() {
