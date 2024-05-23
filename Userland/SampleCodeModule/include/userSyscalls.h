@@ -7,6 +7,10 @@
 #define STDERR 2
 #define STDIN 0
 
-void putC(char * buff, int size, int fd);
-void getC(char * buff, int size, int fd);
+void call_sys_read(char *buf, int size, int fd);
+void call_sys_write(char *buf, int size, int fd);
+void call_timeClock(char *buf);
+void call_regState();
+void call_clear();
+void call_resize();
 #endif
