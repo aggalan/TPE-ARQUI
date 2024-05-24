@@ -6,16 +6,14 @@ static struct kbuff buff = {0, 0, {'\0'}};
 static buffer_ptr ptr = &buff;
 
 void buffer_append(char c) {
-    if (buff.pos < BUFFER_LIMIT-1 && c != '\0') {
+    if (buff.pos < BUFFER_LIMIT-1) {
         buff.buffer[buff.pos] = c;
         buff.pos += 1;
+        buff.buffer[buff.pos] = 0;
     }
-    else if (c != '\0'){
-        buff.buffer[buff.pos] = c;
+    else{
         buff.pos = 0;
-    }
-    if (c != '\b' && c != '\0') {
-        buff.len += 1;
+        buff.buffer[buff.pos] = 0;
     }
 }
 
