@@ -141,6 +141,14 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
 
 }
 
+void put_square(uint64_t x, uint64_t y, uint32_t size, uint64_t color) {
+    for (uint32_t i = 0; i < size; i++) {
+        for (uint32_t j = 0; j < size; j++) {
+            putPixel(color, x + j, y + i);
+        }
+    }
+}
+
 
 void character(char character, uint64_t fcolor, uint64_t bcolor){
     if(character == '\b'){
@@ -162,6 +170,20 @@ void character(char character, uint64_t fcolor, uint64_t bcolor){
 
 void drawWord(char * string) {
     drawWordColor(string, defaultFColor, defaultBColor);
+}
+
+void drawWordColorAt(char * string, uint64_t color, uint32_t x, uint32_t y){
+    uint32_t px = posX;
+    uint32_t py = posY;
+    posX = x;
+    posY = y;
+    drawWordColor(string, color, defaultBColor);
+    posX = px;
+    posY = py;
+}
+
+void drawWordAt(char * string, uint32_t x, uint32_t y){ 
+    drawWordColorAt(string, defaultFColor, x, y);
 }
 
 
