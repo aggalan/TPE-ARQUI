@@ -34,7 +34,10 @@ void bufferize(){
         end_buff = (i == BUFFERLIMIT-1);
         if(c == '\b'){
             if(i > 0){
-                buff[i--] = 0;
+                if (buff[--i] == '\t') {
+                    putCh('\b');
+                }
+                buff[i] = 0;
             }
             else flag = 1;
         }
