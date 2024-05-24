@@ -247,7 +247,7 @@ _exception0Handler:
 	exceptionHandler 0
 	jmp haltcpu
 
-_exception6Handler
+_exception6Handler:
 	exceptionHandler 1
 	jmp haltcpu
 
