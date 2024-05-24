@@ -12,7 +12,6 @@ void buffer_append(char c) {
     }
     else if (c != '\0'){
         buff.buffer[buff.pos] = c;
-        buff.buffer[buff.pos + 1] = 0;
         buff.pos = 0;
     }
     if (c != '\b' && c != '\0') {
@@ -44,12 +43,14 @@ char getBuffAtCurrent() {
     if (buff.pos != 0) {
         return buff.buffer[buff.pos - 1];
     }
-    return '\0';
+    return buff.buffer[BUFFER_LIMIT-1];
 }
 
 void consume() {
     if (buff.pos < BUFFER_LIMIT-1) {
         buff.pos += 1;
+    } else {
+        buff.pos = 0;
     }
 }
 
