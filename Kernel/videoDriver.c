@@ -70,8 +70,8 @@ void drawchar_transparent(char c, uint64_t fcolor) {
 
 void clear() {
     int i, j;
-    for (i = 0; i < 768; i++) {
-        for (j = 0; j < 1024; j++) {
+    for (i = 0; i < VBE_mode_info->height; i++) {
+        for (j = 0; j < VBE_mode_info->width; j++) {
             putPixel(0,j, i);
         }
     }
