@@ -305,7 +305,9 @@ void size_up(){
         return;
     }else{
         size++;
+        clear();
     }
+
     return;
 }
 
@@ -315,6 +317,7 @@ void size_down(){
         return;
     }else{
         size--;
+        clear();
     }
     return;
 }
@@ -322,7 +325,7 @@ void fontSize() {
     char sizeStr[12];  
     intToStr(size, sizeStr, 10);  
 
-    drawWordColor("FONTSIZE is ", WHITE, BLACK);
+    drawWordColor("Size of font is ", WHITE, BLACK);
     drawWord(sizeStr);
     drawChar('\n');
 }
