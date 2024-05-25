@@ -26,6 +26,12 @@ void irqDispatcher(uint64_t irq, uint64_t rax, uint64_t rdi, uint64_t rsi, uint6
 
 void int_20() {
 	timer_handler();
+    if (ticks_elapsed() % 21 <= 10) {
+        cursorOn();
+    } else {
+        cursorOff();
+    }
+
 }
 void int_21(){
 	keyboard_handler();
@@ -57,5 +63,11 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 		case 8:
 				fontSize();
 				break;
+        case 9:
+                cursorOn();
+                break;
+        case 10:
+                cursorOff();
+                break;
 	}
 }

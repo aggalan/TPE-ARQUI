@@ -29,6 +29,8 @@ void bufferize(){
     int i = 0;
     int end_buff = 0;
     int flag = 0;
+    int timer = 0;
+//    call_cursor_on();
     while (i < BUFFERLIMIT){
         char c = getCh();
         end_buff = (i == BUFFERLIMIT-1);
@@ -63,6 +65,7 @@ void bufferize(){
 
         flag = 0;
     }
+
 
     return;
 

@@ -26,6 +26,8 @@ void drawChar(char c);
 void drawWordAt(char * string, uint32_t x, uint32_t y);
 void drawWordColorAt(char * string, uint64_t color, uint32_t x, uint32_t y);
 void put_square(uint64_t x, uint64_t y, uint32_t size, uint64_t color);
+void cursorOff();
+void cursorOn();
 
 #define RED 0xFF0000
 #define WHITE 0xFFFFFF

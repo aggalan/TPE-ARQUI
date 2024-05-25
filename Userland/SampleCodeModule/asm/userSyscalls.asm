@@ -6,6 +6,8 @@ GLOBAL call_size_up
 GLOBAL call_size_down
 GLOBAL call_clear
 GLOBAL call_font
+GLOBAL call_cursor_on
+GLOBAL call_cursor_off
 
 section .text
 
@@ -39,3 +41,7 @@ call_clear:
     call_handler 7
 call_font:
     call_handler 8
+call_cursor_on:
+    call_handler 9
+call_cursor_off:
+    call_handler 10

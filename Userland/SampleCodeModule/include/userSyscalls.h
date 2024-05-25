@@ -15,4 +15,6 @@ void call_clear();
 void call_size_up();
 void call_size_down();
 void call_font();
+void call_cursor_on();
+void call_cursor_off();
 #endif

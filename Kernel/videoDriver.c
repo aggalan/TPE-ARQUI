@@ -219,6 +219,7 @@ void backspace() {
     if (posX == MARGIN && posY == MARGIN) {
         return;
     }
+    cursorOff();
     if (posX <= MARGIN) {
         posX = VBE_mode_info->width-MARGIN-(6*size);
         posY -= 16*size;
@@ -348,5 +349,17 @@ void intToStr(int value, char* str, int base) {
         tmp_char = *ptr;
         *ptr-- = *ptr1;
         *ptr1++ = tmp_char;
+    }
+}
+
+void cursorOff() {
+    drawWordColorAt("a", 0x00000000, posX, posY);
+}
+
+void cursorOn() {
+    for (int i = 0; i < 10; i++) {
+        for (int z = 0; z < size; z++) {
+            putPixel(0x00FFFFFF, i*size + posX + z, posY + 16*size - 2);
+        }
     }
 }
