@@ -11,6 +11,11 @@ int main() {
 	*v = 'X';
 	*(v+1) = 0x74;
 
+	// print("Hello, World!\n");
+	// print("This is a %s\n", "test");
+	// print("This is test: %d \n", 3);
+	// print("This is test: %c\n", '4');
+
 
 	shell_start();
 	//Test if BSS is properly set up
