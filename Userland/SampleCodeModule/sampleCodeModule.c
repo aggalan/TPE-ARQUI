@@ -11,6 +11,18 @@ int main() {
 	*v = 'X';
 	*(v+1) = 0x74;
 
+	int * num;
+    scan("%d", num);
+    print("Scanned number: %d\n", *num);
+	
+	char * str;
+    scan("%s", str);
+    print("Scanned string: %s\n", str);
+
+	char * c;
+    scan("%c", c);
+    print("Scanned char: %c\n", *c);
+
 	// print("Hello, World!\n");
 	// print("This is a %s\n", "test");
 	// print("This is test: %d \n", 3);

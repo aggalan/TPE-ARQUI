@@ -69,9 +69,9 @@ void print( char * fmt, ...){
             fmt++;
             switch(*fmt){
                 case 'd':{
-                    int i = va_arg(args, int);
+                    int d = va_arg(args, int *) ;
                     char buff[BUFFERLIMIT];
-                    int_to_string(i, buff);
+                    intToStr(d, buff, 10);
                     call_sys_write(buff, strlen(buff), STDOUT);
                     break;
                 }
@@ -96,26 +96,24 @@ void print( char * fmt, ...){
     return;
 }
 
-void int_to_string(int num, char * buff){
-    int i = 0;
-    if(num == 0){
-        buff[i++] = '0';
-    } else {
-        if(num < 0){
-            buff[i++] = '-';
-            num = -num;
-        }
-        int aux = num;
-        while(aux > 0){
-            aux /= 10;
-            i++;
-        }
-        aux = num;
-        buff[i] = '\0';
-        while(aux > 0){
-            buff[--i] = (aux % 10) + '0';
-            aux /= 10;
-        }
+void intToStr(int value, char* str, int base) {
+    char* ptr = str;
+    char* ptr1 = str;
+    char tmp_char;
+    int tmp_value;
+
+    do {
+        tmp_value = value;
+        value /= base;
+        *ptr++ = "0123456789"[tmp_value - value * base];
+    } while (value);
+
+    *ptr-- = '\0';
+
+    while (ptr1 < ptr) {
+        tmp_char = *ptr;
+        *ptr-- = *ptr1;
+        *ptr1++ = tmp_char;
     }
 }
 
@@ -125,4 +123,67 @@ int strlen(char * str){
         i++;
     }
     return i;
+}
+
+
+int scan(char * fmt, ...){
+    va_list args;
+    va_start(args, fmt);
+    int i = 0;
+
+    while(*fmt != '\0'){
+        if(*fmt == '%'){
+            fmt++;
+            switch(*fmt){
+                case 'd':{
+                    int * d = va_arg(args, int *);
+                    i+= readInt(d);
+                    break;
+                }
+                case 's':{
+                    char * s = va_arg(args, char *);
+                    i += readStr(s);
+                    break;
+                }
+                case 'c':{
+                    char * c = va_arg(args, char *);
+                    * c = getCh();
+                    i++;
+                    break;
+                }
+            }
+        }
+        fmt++;
+    }
+    
+    va_end(args);
+    return i;
+}
+
+int readStr(char * buff){
+    int i = 0;
+    char c = getCh();
+    while(!null_or_newline(c)){
+        buff[i++] = c;
+        c = getCh();
+    }
+    buff[i] = '\0';
+    return i;
+}
+
+int readInt(int * num){
+    int val = 0;
+    int i = 0;
+    char c = getCh();
+    int sign = 1;
+    if(c == '-'){
+        sign = -1;
+        c = getCh();
+    }
+    while( c != 0 && (c >= '0' && c <= '9')){
+        val = val * 10 + (c - '0');
+        c = getCh();
+    }
+    *num = val * sign;
+    return 1;
 }
