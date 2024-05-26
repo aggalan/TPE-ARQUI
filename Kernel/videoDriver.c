@@ -163,6 +163,10 @@ void character(char character, uint64_t fcolor, uint64_t bcolor){
         tab();
         return;
     }
+    if (character == 0x7C) {
+        moveLeft();
+        return;
+    }
 
     drawchar_color(character, fcolor, bcolor);
     return;
@@ -230,10 +234,33 @@ void backspace() {
             putPixel(0, posX - j - 1, posY + i);
         }
     }
+
+
+    uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
+
+    for (int i = posY; i < VBE_mode_info->height + 16; i++) {
+        for (int j = posX; j < VBE_mode_info->width; j++) {
+
+            uint64_t offset = (j * ((VBE_mode_info->bpp)/8)) + (i * VBE_mode_info->pitch);
+
+            uint8_t blue = framebuffer[offset];
+            uint8_t green = framebuffer[offset + 1];
+            uint8_t red = framebuffer[offset + 2];
+
+            uint64_t hexColor = (red << 16) | (green << 8) | blue;
+
+            putPixel(hexColor, j - (10*size), i);
+
+
+        }
+    } // hacer esto mas eficiente comparando si esta bien o en el medio de palabra
+
+
     posX -= 10*size;
 }
 
 void newline() {
+    cursorOff();
     if (posY >= VBE_mode_info->height-(32*size)-MARGIN) {
         move_screen();
     }
@@ -353,13 +380,26 @@ void intToStr(int value, char* str, int base) {
 }
 
 void cursorOff() {
-    drawWordColorAt("a", 0x00000000, posX, posY);
+    for (int i = 0; i < 10; i++) {
+        for (int z = 0; z < size; z++) {
+            putPixel(0x00000000, i*size + posX + z, posY + 16*size - 1);
+        }
+    };
 }
 
 void cursorOn() {
     for (int i = 0; i < 10; i++) {
         for (int z = 0; z < size; z++) {
-            putPixel(0x00FFFFFF, i*size + posX + z, posY + 16*size - 2);
+            putPixel(0x00FFFFFF, i*size + posX + z, posY + 16*size - 1);
         }
     }
+}
+
+void moveLeft() {
+    cursorOff();
+    if (posX <= MARGIN) {
+        posX = VBE_mode_info->width - MARGIN - (6 * size);
+        posY -= 16 * size;
+    }
+    posX -= 10*size;
 }

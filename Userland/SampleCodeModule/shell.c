@@ -39,7 +39,7 @@ void bufferize(){
                 if (buff[--i] == '\t') {
                     putCh('\b');
                 }
-                buff[i] = 0;
+//                buff[i] == 0;
             }
             else flag = 1;
         }
@@ -49,12 +49,19 @@ void bufferize(){
                clearBuff(buff);
                 return;
             }
-            buff[i] = 0;
+//            buff[i] = 0;
             read_command(buff);
             return;
+        } else if (c == 0x7C){
+            if (i > 0) {
+                i--;
+            } else {
+                flag = 1;
+            }
         } else{
             if(!end_buff && c != 0) {
                 buff[i++] = c;
+                buff[i] = 0;
             }else {
                 flag = 1;
             }
@@ -73,6 +80,7 @@ void bufferize(){
 }
 
 void read_command(char * buff){
+    print(buff);
     seek_command(buff);
     clearBuff(buff);
 
