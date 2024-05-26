@@ -7,6 +7,8 @@ GLOBAL get_month
 GLOBAL get_year
 GLOBAL get_hours
 GLOBAL get_key
+GLOBAL inb
+GLOBAL outb
 
 section .text
 
@@ -106,3 +108,16 @@ get_key:
 	in al, 60h
 	SFO
 	ret
+
+inb:
+	SFI
+	mov rdx, rdi
+	in al, dx
+	SFO
+
+outb:
+	SFI
+	mov rdx, rdi
+	mov rax, rsi
+	out al, dx
+	SFO
