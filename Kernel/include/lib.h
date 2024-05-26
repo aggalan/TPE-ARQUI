@@ -16,4 +16,5 @@ int get_mday();
 int get_month();
 int get_year();
 char * TimeClock(char * buffer);
+void sleepms(int ms);
 #endif

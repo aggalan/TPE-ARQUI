@@ -110,14 +110,14 @@ get_key:
 	ret
 
 inb:
-	SFI
-	mov rdx, rdi
-	in al, dx
-	SFO
+    SFI
+    mov rdx, rdi
+    in al, dx
+    SFO
 
 outb:
-	SFI
-	mov rdx, rdi
-	mov rax, rsi
-	out al, dx
-	SFO
+    SFI
+    mov rdx, rdi
+    mov rax, rsi
+    out dx, al
+    SFO
