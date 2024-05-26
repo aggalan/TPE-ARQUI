@@ -80,6 +80,7 @@ void clear() {
 }
 
 void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
+    cursorOff();
     if (posX >= VBE_mode_info->width-(16*size)-MARGIN && posY >= VBE_mode_info->height-(32*size)-MARGIN) {
         move_screen();
     }
