@@ -54,7 +54,7 @@ void bufferize(){
         }
         else if(c == '\n'){
             putCh(c);
-            if( i == 0){
+            if( i == 0 && buff[i] == 0){
                clearBuff(buff);
                 return;
             }
