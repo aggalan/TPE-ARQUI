@@ -17,4 +17,6 @@ int get_month();
 int get_year();
 char * TimeClock(char * buffer);
 void sleepms(int ms);
+void sleeps(int sec);
+void nanosleep(int ns); 
 #endif

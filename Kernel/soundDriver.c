@@ -33,7 +33,7 @@ static void play_sound(uint32_t nFrequence) {
  //Make a beep
  void beep(int time, int frequency) {
  	 play_sound(frequency);
- 	 //sleepms(time);
+ 	 sleepms(time);
  	 nosound();
           //set_PIT_2(old_frequency);
  }
