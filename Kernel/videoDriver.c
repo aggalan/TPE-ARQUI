@@ -167,6 +167,10 @@ void character(char character, uint64_t fcolor, uint64_t bcolor){
         moveLeft();
         return;
     }
+//    if (character == 0x7D) {
+//        moveRight();
+//        return;
+//    }
 
     drawchar_color(character, fcolor, bcolor);
     return;
@@ -402,4 +406,13 @@ void moveLeft() {
         posY -= 16 * size;
     }
     posX -= 10*size;
+}
+
+void moveRight() {
+    cursorOff();
+    if (posX >= VBE_mode_info->width - MARGIN) {
+        posX = MARGIN;
+        posY += 16 * size;
+    }
+    posX += 10*size;
 }

@@ -39,7 +39,16 @@ void bufferize(){
                 if (buff[--i] == '\t') {
                     putCh('\b');
                 }
+//                putCh('\n');
+//                print(buff);
+
+                int j = i;
+                while (buff[j] != 0) {
+                    buff[j] = buff[j+1];
+                    j++;
+                }
 //                buff[i] == 0;
+//                print(buff);
             }
             else flag = 1;
         }
@@ -58,10 +67,19 @@ void bufferize(){
             } else {
                 flag = 1;
             }
-        } else{
+        }
+//        else if(c == 0x7D) {
+//            if (i < BUFFERLIMIT) {
+//                if (buff[i+1] != 0) {
+//                    i++;
+//                }
+//            } else {
+//                flag = 1;
+//            }
+//        }
+        else{
             if(!end_buff && c != 0) {
                 buff[i++] = c;
-                buff[i] = 0;
             }else {
                 flag = 1;
             }
@@ -80,7 +98,6 @@ void bufferize(){
 }
 
 void read_command(char * buff){
-    print(buff);
     seek_command(buff);
     clearBuff(buff);
 
