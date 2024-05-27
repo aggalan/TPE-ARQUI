@@ -230,7 +230,7 @@ void backspace() {
     }
     cursorOff();
     if (posX <= MARGIN) {
-        posX = VBE_mode_info->width-MARGIN-(6*size);
+        posX = VBE_mode_info->width-MARGIN-(4*size);
         posY -= 16*size;
     }
     int i, j;
@@ -244,7 +244,11 @@ void backspace() {
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
 
     for (int i = posY; i < VBE_mode_info->height + 16; i++) {
-        for (int j = posX; j < VBE_mode_info->width; j++) {
+        for (int j = MARGIN; j < VBE_mode_info->width-MARGIN; j++) {
+
+            if (i <= posY+16*size && j<posX) {
+                continue;
+            }
 
             uint64_t offset = (j * ((VBE_mode_info->bpp)/8)) + (i * VBE_mode_info->pitch);
 
@@ -254,8 +258,11 @@ void backspace() {
 
             uint64_t hexColor = (red << 16) | (green << 8) | blue;
 
-            putPixel(hexColor, j - (10*size), i);
-
+            if (j <= MARGIN + 10*size - 1) {
+                putPixel(hexColor, VBE_mode_info->width-MARGIN-10*size + (j - MARGIN)-4, i-16*size);
+            } else{
+                putPixel(hexColor, j - (10*size), i);
+            }
 
         }
     }
@@ -405,7 +412,7 @@ void cursorOn() {
 void moveLeft() {
     cursorOff();
     if (posX <= MARGIN) {
-        posX = VBE_mode_info->width - MARGIN - (6 * size);
+        posX = VBE_mode_info->width - MARGIN-4;
         posY -= 16 * size;
     }
     posX -= 10*size;
@@ -413,7 +420,7 @@ void moveLeft() {
 
 void moveRight() {
     cursorOff();
-    if (posX >= VBE_mode_info->width - MARGIN) {
+    if (posX >= VBE_mode_info->width - MARGIN-(10*size)) {
         posX = MARGIN;
         posY += 16 * size;
     }
