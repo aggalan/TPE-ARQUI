@@ -108,7 +108,6 @@ void read_command(char * buff){
 int shell_start(){
     welcome_message();
     while(1){
-        call_sound(200, 200);
         line_start();
         bufferize();
     }

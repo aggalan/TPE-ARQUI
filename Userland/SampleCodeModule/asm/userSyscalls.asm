@@ -42,9 +42,5 @@ call_clear:
     call_handler 7
 call_font:
     call_handler 8
-call_cursor_on:
-    call_handler 9
-call_cursor_off:
-    call_handler 10
 call_sound:
-    call_handler 11
+    call_handler 9
