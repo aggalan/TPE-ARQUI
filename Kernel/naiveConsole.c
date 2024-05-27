@@ -114,12 +114,11 @@ uint32_t uintToBase(uint64_t value, char * buffer, uint32_t base)
 
 	return digits;
 }
-
 void convertToGMTMinus3(int *hours, int *days, int *month, int *year) {
-    int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int monthDays = daysInMonth[(*month - 1) % 12];
-	
-    if ( *year % 4 == 0 && (*year % 100 != 0 || *year % 400 == 0)) {
+    
+    if (*year % 4 == 0 && (*year % 100 != 0 || *year % 400 == 0)) {
         daysInMonth[1] = 29;
     }
     *hours -= 3;
@@ -128,7 +127,7 @@ void convertToGMTMinus3(int *hours, int *days, int *month, int *year) {
         *days -= 1;
         if (*days < 1) {
             *month -= 1;
-			monthDays=daysInMonth[(*month - 1) % 12];
+            monthDays = daysInMonth[(*month - 1) % 12];
             if (*month < 1) {
                 *month = 12;
                 *year -= 1;
@@ -138,42 +137,50 @@ void convertToGMTMinus3(int *hours, int *days, int *month, int *year) {
     }
 }
 
-        int get_hours();
-        int get_minutes();
-        int get_seconds();
-        int get_wday();
-        int get_mday();
-        int get_month();
-	int get_year();
+int get_hours();
+int get_minutes();
+int get_seconds();
+int get_wday();
+int get_mday();
+int get_month();
+int get_year();
 
-
-
-char * TimeClock(char * buffer){
-	char * days[]={"sun", "lun", "mar", "mie", "jue", "vie", "sab"};
-	int  hours = get_hours();
-	int  minutes = get_minutes();
-	int  seconds = get_seconds();
-	int  weekday = get_wday();
-	int  monthDay = get_mday();
-	int  month = get_month();
-	int  year = get_year();
+char * TimeClock(char * buffer) {
+    char * days[] = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+    int hours = get_hours();
+    int minutes = get_minutes();
+    int seconds = get_seconds();
+    int weekday = get_wday();
+    int monthDay = get_mday();
+    int month = get_month();
+    int year = get_year();
+    
+    int originalDay = monthDay;
+    
     convertToGMTMinus3(&hours, &monthDay, &month, &year);
-	int digits = uintToBase(hours, buffer, 10);
-	buffer[digits++] = ':';
-	digits += uintToBase(minutes, buffer+digits, 10);
-	buffer[digits++] = ':';
-	digits += uintToBase(seconds, buffer+digits, 10);
-	buffer[digits++] =' ';
-	for(int i = 0; i < 3; i++)
-		buffer[digits++] = days[weekday-1][i];
-	buffer[digits++] =' ';
-	digits += uintToBase(monthDay, buffer+digits, 10);
-	buffer[digits++] ='/';
-	digits += uintToBase(month, buffer+digits, 10);
-	buffer[digits++] ='/';
-	digits += uintToBase(year, buffer+digits, 10);
-	buffer[digits++] =' ';
-	buffer[digits] = 0;
-	return buffer;
 
+    if (monthDay != originalDay) {
+        weekday -= 1;
+        if (weekday < 1)
+            weekday = 7; 
+    }
+    
+    int digits = uintToBase(hours, buffer, 10);
+    buffer[digits++] = ':';
+    digits += uintToBase(minutes, buffer + digits, 10);
+    buffer[digits++] = ':';
+    digits += uintToBase(seconds, buffer + digits, 10);
+    buffer[digits++] = ' ';
+    for (int i = 0; i < 3; i++)
+        buffer[digits++] = days[weekday - 1][i];
+    buffer[digits++] = ' ';
+    digits += uintToBase(monthDay, buffer + digits, 10);
+    buffer[digits++] = '/';
+    digits += uintToBase(month, buffer + digits, 10);
+    buffer[digits++] = '/';
+    digits += uintToBase(year, buffer + digits, 10);
+    buffer[digits++] = ' ';
+    buffer[digits] = 0;
+    return buffer;
 }
+
