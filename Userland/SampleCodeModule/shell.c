@@ -80,6 +80,12 @@ void bufferize(){
 //        }
         else{
             if(!end_buff && c != 0) {
+
+//                int z = BUFFERLIMIT-1;
+//                while(z != i) {
+//                    buff[z] = buff[z-1];
+//                }
+
                 buff[i++] = c;
             }else {
                 flag = 1;

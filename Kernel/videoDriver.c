@@ -258,7 +258,8 @@ void backspace() {
 
 
         }
-    } // hacer esto mas eficiente comparando si esta bien o en el medio de palabra
+    }
+
 
 
     posX -= 10*size;
