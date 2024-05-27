@@ -358,9 +358,10 @@ void fontSize() {
     char sizeStr[12];  
     intToStr(size, sizeStr, 10);  
 
-    drawWordColor("Size of font is ", WHITE, BLACK);
+    drawWordColor("Font size is ", WHITE, BLACK);
     drawWord(sizeStr);
     drawChar('\n');
+    drawWordColor("Maximum font size is 3, minimum font size is 1\n", WHITE, BLACK);
 }
 
 void intToStr(int value, char* str, int base) {
