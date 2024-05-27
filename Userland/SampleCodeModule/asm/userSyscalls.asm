@@ -8,6 +8,7 @@ GLOBAL call_clear
 GLOBAL call_font
 GLOBAL call_cursor_on
 GLOBAL call_cursor_off
+GLOBAL call_sound
 
 section .text
 
@@ -45,3 +46,5 @@ call_cursor_on:
     call_handler 9
 call_cursor_off:
     call_handler 10
+call_sound:
+    call_handler 11

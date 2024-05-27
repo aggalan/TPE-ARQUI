@@ -17,4 +17,5 @@ void call_size_down();
 void call_font();
 void call_cursor_on();
 void call_cursor_off();
+void call_sound(int time, int frequency);
 #endif

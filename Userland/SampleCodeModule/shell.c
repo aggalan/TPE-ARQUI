@@ -26,6 +26,7 @@ void line_start(){
 // El buff se llene, se encuentre un backspace o un enter
 
 void bufferize(){
+    
     int i = 0;
     int end_buff = 0;
     int flag = 0;
@@ -107,6 +108,7 @@ void read_command(char * buff){
 int shell_start(){
     welcome_message();
     while(1){
+        call_sound(200, 200);
         line_start();
         bufferize();
     }

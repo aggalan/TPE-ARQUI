@@ -5,6 +5,7 @@
 #include "videoDriver.h"
 #include "registers.h"
 #include "interrupts.h"
+#include "soundDriver.h"
 
 
 static void int_20();
@@ -69,5 +70,8 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
         case 10:
                 cursorOff();
                 break;
+		case 11:
+				beep(rdi, rsi);
+				break;
 	}
 }
