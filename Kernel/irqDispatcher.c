@@ -67,5 +67,20 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 		case 9:
 				beep(rdi, rsi);
 				break;
+		case 10:
+				clearColor(rdi);
+				break;
+		case 11:
+				drawWordColorAt((char *)rdi, rsi, rdx, r10);
+				break;
+		case 12:
+				put_square(rdi, rsi, rdx, r10);
+				break;
+		case 13:
+				sleepms(rdi);
+				break;
+		case 14:
+				sleeps(rdi);
+				break;
 	}
 }

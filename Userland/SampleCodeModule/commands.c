@@ -1,7 +1,7 @@
 //agregar includes
 //definir el commands size en el .h
 #include "commands.h"
-#include "syscall.h"
+#include "userSyscalls.h"
 #include "utils.h"
 #include "invalidOp.h"
 

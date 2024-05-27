@@ -18,4 +18,9 @@ void call_font();
 void call_cursor_on();
 void call_cursor_off();
 void call_sound(int time, int frequency);
+void call_paint_screen(uint64_t color);
+void call_drawWordColorAt(char * string, uint64_t color, uint32_t x, uint32_t y);
+void call_put_square(uint64_t x, uint64_t y, uint32_t size, uint64_t color);
+void call_sleepms(int ms);
+void call_sleeps(int s);
 #endif

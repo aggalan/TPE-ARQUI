@@ -6,9 +6,12 @@ GLOBAL call_size_up
 GLOBAL call_size_down
 GLOBAL call_clear
 GLOBAL call_font
-GLOBAL call_cursor_on
-GLOBAL call_cursor_off
 GLOBAL call_sound
+GLOBAL call_paint_screen
+GLOBAL call_drawWordColorAt
+GLOBAL call_put_square
+GLOBAL call_handler
+GLOBAL 
 
 section .text
 
@@ -44,3 +47,13 @@ call_font:
     call_handler 8
 call_sound:
     call_handler 9
+call_paint_screen:
+    call_handler 10
+call_drawWordColorAt:
+    call_handler 11
+call_put_square:
+    call_handler 12
+call_sleepms:
+    call_handler 13
+call_sleeps:
+    call_handler 14
