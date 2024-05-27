@@ -35,7 +35,7 @@ void call_command(int i, char * command){
             invalidOpASM();
             return;
         case ELIMINATOR:;
-            //eliminator(); //falta hacer jueguito
+//            start_game();
             return;
         case INCFONT:;
             call_size_up();
@@ -49,7 +49,7 @@ void call_command(int i, char * command){
         case CLEAR:;
             call_clear(); 
             return;
-        default:;
+        default:
             call_sys_write("ERROR - Command not found",30,2);
             putCh('\n');
             return;

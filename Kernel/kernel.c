@@ -4,6 +4,8 @@
 #include <moduleLoader.h>
 #include <naiveConsole.h>
 #include <syscalls.h>
+#include <videoDriver.h>
+#include <font.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -87,7 +89,15 @@ void * initializeKernelBinary()
 int main()
 {
 	load_idt();
-
+//    int x = 1024/2;
+//    int y = 762/2;
+//    for (int i =0; i < NOSOTROS_HEIGHT * NOSOTROS_WIDTH;i++) {
+//        putPixel(NOSOTROS[i], x++, y);
+//        if (x == NOSOTROS_WIDTH + 1024/2) {
+//            x = 1024/2;
+//            y++;
+//        }
+//    }
 //	char buffer[64]={0};
 //	ncPrint(TimeClock(buffer));
 //	ncPrintColor("Arquitectura de computadoras", 0xF0, 0x0A);
