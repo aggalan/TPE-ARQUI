@@ -456,3 +456,15 @@ void move_screen_right() {
         }
     }
 }
+
+uint64_t pixelColorAt(uint32_t x, uint32_t y) {
+    uint64_t offset = (x * ((VBE_mode_info->bpp)/8)) + (y * VBE_mode_info->pitch);
+
+    uint8_t blue = framebuffer[offset];
+    uint8_t green = framebuffer[offset + 1];
+    uint8_t red = framebuffer[offset + 2];
+
+    uint64_t hexColor = (red << 16) | (green << 8) | blue;
+
+    return hexColor;
+}
