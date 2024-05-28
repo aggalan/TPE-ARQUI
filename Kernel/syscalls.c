@@ -28,7 +28,7 @@ void sys_read(char * c, int len, int fd){
             _hlt();
             aux = getBuffAtCurrent();
             if (aux > 0 && aux <= 255) {
-                c[i++] = ScanCodes[(int)aux];
+                c[i++] = ScanCodes[(int)aux].make;
                 consume();
             }
 

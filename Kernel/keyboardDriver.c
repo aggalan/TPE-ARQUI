@@ -15,7 +15,7 @@ void keyboard_handler(){
         return;
     }
 
-    if(ScanCodes[key] == ';'){
+    if(ScanCodes[key].make == ';'){
         saveRegState();
         register_snapshot_taken = 1;
         return;
