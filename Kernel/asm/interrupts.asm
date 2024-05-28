@@ -230,7 +230,7 @@ _irq60Handler:
 	push rbp
 	mov rbp, rsp
 	pushState
-	mov r9, r10
+	mov r9, rcx
 	mov r8, rdx
 	mov rcx, rsi
 	mov rdx, rdi

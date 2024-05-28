@@ -4,6 +4,7 @@
 #include "userSyscalls.h"
 #include "utils.h"
 #include "invalidOp.h"
+#include "eliminator.h"
 
 static char commands[COMMANDS_SIZE][14] = {"HELP", "TIME", "REGSTATE", "DIVZERO", "INVALIDOP", "ELIMINATOR", "INCFONT", "DECFONT","FONTSIZE", "CLEAR" };
 
@@ -35,7 +36,7 @@ void call_command(int i, char * command){
             invalidOpASM();
             return;
         case ELIMINATOR:;
-//            start_game();
+           start_game();
             return;
         case INCFONT:;
             call_size_up();
