@@ -105,7 +105,11 @@ get_year:
 get_key:
 	SFI
 	xor rax, rax
-	in al, 60h
+
+	mov al, 0x47
+	out 0x64, al
+
+	in al, 0x60
 	SFO
 	ret
 
