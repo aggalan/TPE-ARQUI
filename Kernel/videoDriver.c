@@ -89,6 +89,8 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
         fcolor = bcolor;
     }
 
+    move_screen_right();
+
     int cx, cy;
     int pos = c - 33;
     if(isMinusc(c)){
@@ -168,10 +170,10 @@ void character(char character, uint64_t fcolor, uint64_t bcolor){
         moveLeft();
         return;
     }
-//    if (character == 0x7D) {
-//        moveRight();
-//        return;
-//    }
+    if (character == 0x7D) {
+        moveRight();
+        return;
+    }
 
     drawchar_color(character, fcolor, bcolor);
     return;
@@ -420,9 +422,37 @@ void moveLeft() {
 
 void moveRight() {
     cursorOff();
-    if (posX >= VBE_mode_info->width - MARGIN-(10*size)) {
+    if (posX >= VBE_mode_info->width - MARGIN-4 -(10*size)) {
         posX = MARGIN;
         posY += 16 * size;
+        return;
     }
     posX += 10*size;
+}
+
+void move_screen_right() {
+    uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
+    for (int i = (VBE_mode_info->height >posY + 3*16*size)? posY + 3*16*size:VBE_mode_info->height; i > posY; i--) {
+        for (int j = VBE_mode_info->width-MARGIN-5; j >= MARGIN; j--) {
+
+            if (i <= posY+16*size && j<posX) {
+                continue;
+            }
+
+            uint64_t offset = (j * ((VBE_mode_info->bpp)/8)) + (i * VBE_mode_info->pitch);
+
+            uint8_t blue = framebuffer[offset];
+            uint8_t green = framebuffer[offset + 1];
+            uint8_t red = framebuffer[offset + 2];
+
+            uint64_t hexColor = (red << 16) | (green << 8) | blue;
+
+            if (j >= VBE_mode_info->width - MARGIN - 4 - (size*10)) {
+                putPixel(hexColor,MARGIN + (j - (VBE_mode_info->width - MARGIN - 4-(size*10))), i+16*size);
+            } else{
+                putPixel(hexColor, j + (10*size), i);
+            }
+
+        }
+    }
 }

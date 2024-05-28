@@ -79,7 +79,7 @@
     0, // 0x4A - Numpad '-'
     0x7C, // 0x4B - Numpad 4
     0, // 0x4C - Numpad 5
-    0, // 0x4D - Numpad 6
+    0x7D, // 0x4D - Numpad 6
     0, // 0x4E - Numpad '+'
     0, // 0x4F - Numpad 1
     0, // 0x50 - Numpad 2

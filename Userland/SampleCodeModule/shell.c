@@ -31,6 +31,7 @@ void bufferize(){
     int end_buff = 0;
     int flag = 0;
     int timer = 0;
+    int max_pos = 0;
 //    call_cursor_on();
     while (i < BUFFERLIMIT){
         char c = getCh();
@@ -50,10 +51,13 @@ void bufferize(){
                 }
 //                buff[i] == 0;
 //                print(buff);
+
+                max_pos--;
             }
             else flag = 1;
         }
         else if(c == '\n'){
+            max_pos = 0;
             putCh(c);
             if( i == 0 && buff[i] == 0){
                clearBuff(buff);
@@ -69,22 +73,22 @@ void bufferize(){
                 flag = 1;
             }
         }
-//        else if(c == 0x7D) {
-//            if (i < BUFFERLIMIT) {
-//                if (buff[i+1] != 0) {
-//                    i++;
-//                }
-//            } else {
-//                flag = 1;
-//            }
-//        }
+        else if(c == 0x7D) {
+//            putCh(max_pos + '0');
+            if (i < BUFFERLIMIT && i < max_pos) {
+                i++;
+            } else {
+                flag = 1;
+            }
+        }
         else{
-            if(!end_buff && c != 0) {
-
-//                int z = BUFFERLIMIT-1;
-//                while(z != i) {
-//                    buff[z] = buff[z-1];
-//                }
+            if(!end_buff && c != 0 && max_pos < BUFFERLIMIT-1) {
+                max_pos++;
+                int z = BUFFERLIMIT-1;
+                while(z != i) {
+                    buff[z] = buff[z-1];
+                    z--;
+                }
 
                 buff[i++] = c;
             }else {
