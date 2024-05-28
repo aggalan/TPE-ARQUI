@@ -22,6 +22,6 @@ char getBuffAtCurrent();
 void consume_char();
 int buffer_len();
 void setPos(int newPos);
-
+char getBuffCharAt(int pos);
 
 #endif

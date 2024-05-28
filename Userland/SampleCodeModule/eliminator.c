@@ -126,8 +126,12 @@ void start_game(){
 
     initializeGame();
 
-    while (1) {
-        char key = getCh();  // Obtener entrada del teclado (bloqueante)
+    int pos = 0;
+    char key;
+
+    while (pos <= call_get_pos()) {
+
+        key = call_get_charAt(pos++ - 1);  // Obtener entrada del teclado (bloqueante)
         handleInput(key);
         updateGame();
     }

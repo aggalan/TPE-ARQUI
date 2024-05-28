@@ -44,6 +44,10 @@ char getBuffAtCurrent() {
     return buff.buffer[BUFFER_LIMIT-1];
 }
 
+char getBuffCharAt(int pos){
+    return buff.buffer[pos];
+}
+
 void consume() {
     if (buff.pos < BUFFER_LIMIT-1) {
         buff.pos += 1;

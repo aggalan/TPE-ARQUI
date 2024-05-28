@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "sounddriver.h": "c"
+        "sounddriver.h": "c",
+        "interrupts.h": "c",
+        "naiveconsole.h": "c"
     }
 }

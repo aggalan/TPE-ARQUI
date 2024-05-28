@@ -12,6 +12,8 @@ GLOBAL call_drawWordColorAt
 GLOBAL call_put_square
 GLOBAL call_handler
 GLOBAL call_pixelColorAt
+GLOBAL call_get_pos
+GLOBAL call_get_charAt
 
 section .text
 
@@ -59,3 +61,7 @@ call_sleeps:
     call_handler 14
 call_pixelColorAt:
     call_handler 15
+call_get_pos:
+    call_handler 16
+call_get_charAt:
+    call_handler 17
