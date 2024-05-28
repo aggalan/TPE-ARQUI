@@ -23,11 +23,11 @@ uint64_t DEFAULT_FCOLOR = RED;
 uint64_t DEFAULT_PLAYER1_COLOR = RED;
 uint64_t DEFAULT_PLAYER2_COLOR = GREEN;
 
-uint32_t MENU_X;
-uint32_t MENU_Y;
+uint32_t MENU_X = 100;
+uint32_t MENU_Y = 20;
 
-uint32_t START_X;
-uint32_t START_Y;
+uint32_t START_X = 100;
+uint32_t START_Y = 20;
 
 
 uint32_t CONFIG_X;
@@ -50,6 +50,7 @@ typedef struct {
 Snake player1;
 Snake player2;
 uint64_t board[SCREEN_WIDTH][SCREEN_HEIGHT];
+bool quit = false;
 
 
 //
@@ -78,49 +79,51 @@ uint64_t board[SCREEN_WIDTH][SCREEN_HEIGHT];
 // }
 //
 //
-//
-// void eliminator(){
-//     print_start();
-//     getCh();
-//     menu();
-//     }
-//
-// void reset_menu(){
-//     ccall_paint_screen(DEFAULT_BCOLOR);
-//         print_menu();
-//         option = getCh();
-// }
-//
-// void print_start(){
-//     call_paint_screen(DEFAULT_BCOLOR);
-//     call_drawWordColorAt("ELIMINATOR\n", DEFAULT_FCOLOR, START_X, START_Y);
-//     call_drawWordColorAt("Press any key to start\n", DEFAULT_FCOLOR , START_X, START_Y + 64);
-// }
-//
-// void print_menu(){
-//     call_paint_screen(BLACK);
-//     call_drawWordColorAt(get_players(), DEFAULT_FCOLOR, MENU_X, MENU_Y);
-//     call_drawWordColorAt(get_speed(), DEFAULT_FCOLOR, MENU_X, MENU_Y + 64);
-//     call_drawWordColorAt(get_level(), DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
-//     call_drawWordColorAt("[SPACE] to begin game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
-//     call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
-// }
-//
-// void menu(){
-//     print_menu();
-//     char option = getCh();
-//     while(option != ' ' && option != '\n'){
-//         reset_menu();
-//     }
-//     switch (option){
-//     case ' ':
-//         start_game();
-//     case '\n':
-//         change_settings();
-//     }
-// }
-//
+
+void eliminator(){
+    call_size_up();
+    print_start();
+    getCh();
+    menu();
+    call_size_down();
+    }
+
+
+void print_start(){
+    call_paint_screen(DEFAULT_BCOLOR);
+    call_drawWordColorAt("ELIMINATOR\n", DEFAULT_FCOLOR, START_X, START_Y);
+    call_drawWordColorAt("Press any key to start\n", DEFAULT_FCOLOR , START_X, START_Y + 64);
+}
+
+void print_menu(){
+    call_paint_screen(BLACK);
+    call_drawWordColorAt("PLAYERS: ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
+    call_drawWordColorAt("SPEED: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 64);
+    call_drawWordColorAt("LEVEL: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
+    call_drawWordColorAt("[SPACE] to begin game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
+    call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
+}
+
+void menu(){
+    while(1){
+    call_paint_screen(BLACK);
+    print_menu();
+    char option = getCh();
+    switch (option){
+    case 'q':
+        return;
+    case ' ':
+        start_game();
+    }
+    }
+}
+
 void start_game(){
+
+    if(quit){
+        return;
+    }
+
     initializeGame();
 
     while (1) {
@@ -145,28 +148,28 @@ void drawSegment(Segment seg, uint64_t color) {
 
 void handleInput(char key) {
     switch (key) {
-        case 'W':  // Mover jugador 1 hacia arriba
+        case 'w':  // Mover jugador 1 hacia arriba
             player1.direction = UP;
             break;
-        case 'S':  // Mover jugador 1 hacia abajo
+        case 's':  // Mover jugador 1 hacia abajo
             player1.direction = DOWN;
             break;
-        case 'A':  // Mover jugador 1 hacia la izquierda
+        case 'a':  // Mover jugador 1 hacia la izquierda
             player1.direction = LEFT;
             break;
-        case 'D':  // Mover jugador 1 hacia la derecha
+        case 'd':  // Mover jugador 1 hacia la derecha
             player1.direction = RIGHT;
             break;
-        case 'I':  // Mover jugador 2 hacia arriba
+        case 'i':  // Mover jugador 2 hacia arriba
             player2.direction = UP;
             break;
-        case 'K':  // Mover jugador 2 hacia abajo
+        case 'k':  // Mover jugador 2 hacia abajo
             player2.direction = DOWN;
             break;
-        case 'J':  // Mover jugador 2 hacia la izquierda
+        case 'j':  // Mover jugador 2 hacia la izquierda
             player2.direction = LEFT;
             break;
-        case 'L':  // Mover jugador 2 hacia la derecha
+        case 'l':  // Mover jugador 2 hacia la derecha
             player2.direction = RIGHT;
             break;
     }
@@ -202,7 +205,7 @@ bool updateSnake(Snake *snake) {
 
     bool collision = false;
 
-    switch (snake->direction) {
+    switch (snake->direction){
         case UP:
             snake->head.y -= PLAYER_SIZE + 1;
             break;
@@ -251,7 +254,9 @@ void drawMargins(){
 void game_over(){
     call_paint_screen(BLACK);
     call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
-    call_drawWordColorAt("Press any key to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2 + 64);
-    getCh();
+    call_drawWordColorAt("Press q to exit, other to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 + 40);
+    if(getCh() == 'q'){
+        quit = true;
+    }
     start_game();
 }

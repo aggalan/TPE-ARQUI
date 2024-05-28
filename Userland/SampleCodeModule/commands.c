@@ -36,7 +36,7 @@ void call_command(int i, char * command){
             invalidOpASM();
             return;
         case ELIMINATOR:;
-           start_game();
+           eliminator();
             return;
         case INCFONT:;
             call_size_up();
