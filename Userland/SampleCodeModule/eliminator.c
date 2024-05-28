@@ -8,12 +8,11 @@
 // Constantes del juego
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 760
-#define PLAYER_SIZE 10
+#define PLAYER_SIZE 15
 #define UP 0
 #define DOWN 1
 #define LEFT 2
 #define RIGHT 3
-#define MAX_LENGTH 1000  // Máximo número de segmentos de la serpiente
 #define DEFAULT_LEVEL 1
 #define DEFAULT_SPEED 2
 #define DEFAULT_PLAYERS 1
@@ -39,12 +38,11 @@ unsigned int level = DEFAULT_LEVEL;
 
 
 typedef struct {
-    int x, y;
+    uint64_t x, y;
 } Segment;
 
 typedef struct {
-    Segment segments[MAX_LENGTH];
-    int length;
+    Segment head;
     int direction;
     uint64_t color;
 } Snake;
@@ -137,11 +135,6 @@ void drawSegment(Segment seg, uint64_t color) {
     call_put_square(seg.x, seg.y, PLAYER_SIZE, color);
 }
 
-void drawSnake(Snake *snake) {
-    for (int i = 0; i < snake->length; i++) {
-        drawSegment(snake->segments[i], snake->color);
-    }
-}
 
 
 void handleInput(char key) {
@@ -175,83 +168,55 @@ void handleInput(char key) {
 
 void initializeGame() {
 
-    player1.length = 1;
     player1.direction = UP;
     player1.color = RED;
-    player1.segments[0].x = SCREEN_WIDTH / 2;
-    player1.segments[0].y = SCREEN_HEIGHT - 10;
+    player1.head.x = SCREEN_WIDTH / 2;
+    player1.head.y = SCREEN_HEIGHT - 10;
 
-    player2.length = 1;
     player2.direction = DOWN;
     player2.color = GREEN;
-    player2.segments[0].x = SCREEN_WIDTH / 2;
-    player2.segments[0].y = 10;
+    player2.head.x = SCREEN_WIDTH / 2;
+    player2.head.y = 10;
 
     call_paint_screen(BLACK);
-    drawSnake(&player1);
-    drawSnake(&player2);
+    drawSegment(player1.head, player1.color);
+    drawSegment(player2.head, player2.color);
 }
 
-void updateSnake(Snake *snake) {
-    Segment new_head = snake->segments[0];
+bool updateSnake(Snake *snake) {
+
+    bool collision = false;
+
 
     switch (snake->direction) {
         case UP:
-            new_head.y -= PLAYER_SIZE;
+            snake->head.y -= PLAYER_SIZE + 1;
             break;
         case DOWN:
-            new_head.y += PLAYER_SIZE;
+            snake->head.y += PLAYER_SIZE + 1;
             break;
         case LEFT:
-            new_head.x -= PLAYER_SIZE;
+            snake->head.x -= PLAYER_SIZE + 1;
             break;
         case RIGHT:
-            new_head.x += PLAYER_SIZE;
+            snake->head.x += PLAYER_SIZE + 1;
             break;
     }
 
-    // Mover segmentos
-    for (int i = snake->length - 1; i > 0; i--) {
-        snake->segments[i] = snake->segments[i - 1];
+    uint64_t color = call_pixelColorAt(snake->head.x, snake->head.y);
+
+    if(color != 0x0000000000000000){
+        collision = true;
     }
-    snake->segments[0] = new_head;
 
-    drawSegment(snake->segments[0], snake->color);
+    drawSegment(snake->head, snake->color);
+    return collision;
 }
 
-bool checkCollision(Snake *snake1, Snake *snake2) {
-    Segment head = snake1->segments[0];
-
-    
-
-    // Colisión con los bordes
-    // if (head.x < 0 || head.x >= SCREEN_WIDTH || head.y < 0 || head.y >= SCREEN_HEIGHT) {
-    //     return true;
-    // }
-
-    // // Colisión con el propio cuerpo
-    // for (int i = 1; i < snake1->length; i++) {
-    //     if (head.x == snake1->segments[i].x && head.y == snake1->segments[i].y) {
-    //         return true;
-    //     }
-    // }
-
-    // //Colision con la otra snake
-    // for (int i = 1; i < snake2->length; i++) {
-    //     if (head.x == snake2->segments[i].x && head.y == snake2->segments[i].y) {
-    //         return true;
-    //     }
-    // }
-
-    return false;
-}
 
 void updateGame() {
 
-    updateSnake(&player1);
-    updateSnake(&player2);
-
-    if (checkCollision(&player1, &player2) || checkCollision(&player2, &player1)) {
+    if (updateSnake(&player1)|| updateSnake(&player2)) {
         print("GAME OVER\n");
         initializeGame();
     }

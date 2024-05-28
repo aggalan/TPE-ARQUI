@@ -11,7 +11,7 @@ GLOBAL call_paint_screen
 GLOBAL call_drawWordColorAt
 GLOBAL call_put_square
 GLOBAL call_handler
-GLOBAL 
+GLOBAL call_pixelColorAt
 
 section .text
 
