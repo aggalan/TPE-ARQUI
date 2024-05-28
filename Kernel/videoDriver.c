@@ -458,6 +458,8 @@ void move_screen_right() {
 }
 
 uint64_t pixelColorAt(uint32_t x, uint32_t y) {
+
+    uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
     uint64_t offset = (x * ((VBE_mode_info->bpp)/8)) + (y * VBE_mode_info->pitch);
 
     uint8_t blue = framebuffer[offset];
