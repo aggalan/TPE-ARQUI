@@ -7,12 +7,12 @@
 
 static int shift = 0;
 
-void shift_active() {
-    shift = 1;
+void set_shift(int i) {
+    shift = i;
 }
 
-void shift_dropped() {
-    shift = 0;
+int get_shift_val() {
+    return shift;
 }
 
 void sys_write(const char * buff, int len, int fd){
@@ -39,7 +39,7 @@ void sys_read(char * c, int len, int fd){
             if (aux > 0 && aux <= 255) {
 
 
-                if (shift == 1 && ScanCodes[(int)aux].make >= 'a' && ScanCodes[(int)aux].make <= 'z') {
+                if ( shift != 0 && ScanCodes[(int)aux].make >= 'a' && ScanCodes[(int)aux].make <= 'z') {
                     c[i++] = ScanCodes[(int)aux].make - 32;
                 } else {
                     c[i++] = ScanCodes[(int)aux].make;

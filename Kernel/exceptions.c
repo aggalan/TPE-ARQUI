@@ -8,7 +8,7 @@
 
 
 void exceptionDispatcher(int exception, registerStruct * registers) {
-	if (exception == ZERO_EXCEPTION_ID)
+    if (exception == ZERO_EXCEPTION_ID)
 		zero_division();
 	else {
 		invalid_op();
