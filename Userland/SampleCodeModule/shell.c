@@ -7,6 +7,9 @@
 
 
 static char buff[BUFFERLIMIT] = {0};
+static char prev_commands[10][BUFFERLIMIT] = {{0}};
+static int prev_num = 0;
+static int count_num = 0;
 
 void welcome_message(){
     //call_paint_screen(BLACK);
@@ -63,6 +66,12 @@ void bufferize(){
                clearBuff(buff);
                 return;
             }
+
+//            for (int p = 0; buff[p] != 0; p++) {
+//                prev_commands[count_num][p] = buff[p];
+//            }
+//            count_num++;
+
 //            buff[i] = 0;
             read_command(buff);
             return;
@@ -81,6 +90,19 @@ void bufferize(){
                 flag = 1;
             }
         }
+//        else if (c == 0x7B) {
+//            if (prev_num < count_num) {
+//                clearBuff(buff);
+//                i = 0;
+//                while(prev_commands[prev_num][i] != 0) {
+//                    buff[i] = prev_commands[prev_num][i];
+//                    putCh(buff[i]);
+//                    i++;
+//                }
+//                prev_num++;
+//            }
+//            flag = 1;
+//        }
         else{
             if(!end_buff && c != 0 && max_pos < BUFFERLIMIT-1) {
                 max_pos++;
@@ -116,6 +138,7 @@ void read_command(char * buff){
 
 
 int shell_start(){
+    call_clear();
     welcome_message();
     while(1){
         line_start();

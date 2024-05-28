@@ -17,11 +17,9 @@
   <component name="ChangeListManager">
     <list default="true" id="37aa8420-5861-4059-90f8-3d23d40572fb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kernel/exceptions.c" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/exceptions.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kernel/include/keyboardDriver.h" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/include/keyboardDriver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kernel/include/syscalls.h" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/include/syscalls.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kernel/keyboardDriver.c" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/keyboardDriver.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kernel/syscalls.c" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/syscalls.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kernel/videoDriver.c" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/videoDriver.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Userland/SampleCodeModule/shell.c" beforeDir="false" afterPath="$PROJECT_DIR$/Userland/SampleCodeModule/shell.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +99,7 @@
       <updated>1716476389467</updated>
       <workItem from="1716476391950" duration="319000" />
       <workItem from="1716477451579" duration="12601000" />
-      <workItem from="1716842806308" duration="15884000" />
+      <workItem from="1716842806308" duration="20302000" />
     </task>
     <servers />
   </component>

@@ -245,7 +245,7 @@ void backspace() {
 
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
 
-    for (int i = posY; i < VBE_mode_info->height + 16; i++) {
+    for (int i = posY; i < VBE_mode_info->height && i < posY + 3*16*size; i++) {
         for (int j = MARGIN; j < VBE_mode_info->width-MARGIN; j++) {
 
             if (i <= posY+16*size && j<posX) {
