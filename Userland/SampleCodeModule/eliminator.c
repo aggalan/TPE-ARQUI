@@ -8,7 +8,7 @@
 // Constantes del juego
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 760
-#define PLAYER_SIZE 15
+#define PLAYER_SIZE 10
 #define UP 0
 #define DOWN 1
 #define LEFT 2
@@ -49,6 +49,7 @@ typedef struct {
 
 Snake player1;
 Snake player2;
+uint64_t board[SCREEN_WIDTH][SCREEN_HEIGHT];
 
 
 //
@@ -133,6 +134,11 @@ void start_game(){
 
 void drawSegment(Segment seg, uint64_t color) {
     call_put_square(seg.x, seg.y, PLAYER_SIZE, color);
+    for(int i = 0; i < PLAYER_SIZE; i++){
+        for(int j = 0; j < PLAYER_SIZE; j++){
+            board[seg.x + i][seg.y + j] = color;
+        }
+    }
 }
 
 
@@ -168,17 +174,26 @@ void handleInput(char key) {
 
 void initializeGame() {
 
+    for(int i = 0; i < SCREEN_WIDTH; i++){
+        for(int j = 0; j < SCREEN_HEIGHT; j++){
+            board[i][j] = 0;
+        }
+    }
+
     player1.direction = UP;
     player1.color = RED;
     player1.head.x = SCREEN_WIDTH / 2;
-    player1.head.y = SCREEN_HEIGHT - 10;
+    player1.head.y = SCREEN_HEIGHT - 25;
 
     player2.direction = DOWN;
     player2.color = GREEN;
     player2.head.x = SCREEN_WIDTH / 2;
-    player2.head.y = 10;
+    player2.head.y = 25;
 
     call_paint_screen(BLACK);
+
+     drawMargins();
+
     drawSegment(player1.head, player1.color);
     drawSegment(player2.head, player2.color);
 }
@@ -186,7 +201,6 @@ void initializeGame() {
 bool updateSnake(Snake *snake) {
 
     bool collision = false;
-
 
     switch (snake->direction) {
         case UP:
@@ -203,12 +217,14 @@ bool updateSnake(Snake *snake) {
             break;
     }
 
-    uint64_t color = call_pixelColorAt(snake->head.x, snake->head.y);
 
-    if(color != 0x0000000000000000){
-        collision = true;
+    for(int i = 0; i < PLAYER_SIZE; i++){
+        for(int j = 0; j < PLAYER_SIZE; j++){
+            if(board[snake->head.x + i][snake->head.y + j] != 0){
+                collision = true;
+            }
+        }
     }
-
     drawSegment(snake->head, snake->color);
     return collision;
 }
@@ -217,7 +233,25 @@ bool updateSnake(Snake *snake) {
 void updateGame() {
 
     if (updateSnake(&player1)|| updateSnake(&player2)) {
-        print("GAME OVER\n");
-        initializeGame();
+       game_over();
     }
+}
+
+void drawMargins(){
+    for(int i = 20; i < SCREEN_WIDTH; i++){
+        for(int j = 10; j < SCREEN_HEIGHT; j++){
+            if(i == 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || i == SCREEN_WIDTH - 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || j == 10  && i >= 20 && i <= SCREEN_WIDTH - 20 || j == SCREEN_HEIGHT - 10 && i >= 20 && i <= SCREEN_WIDTH - 20){
+                board[i][j] = RED;
+                call_put_square(i, j, 5, RED);
+            }
+        }
+    }
+}
+
+void game_over(){
+    call_paint_screen(BLACK);
+    call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
+    call_drawWordColorAt("Press any key to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2 + 64);
+    getCh();
+    start_game();
 }
