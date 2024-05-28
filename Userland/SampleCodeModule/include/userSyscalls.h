@@ -23,4 +23,5 @@ void call_drawWordColorAt(char * string, uint64_t color, uint32_t x, uint32_t y)
 void call_put_square(uint64_t x, uint64_t y, uint32_t size, uint64_t color);
 void call_sleepms(int ms);
 void call_sleeps(int s);
+uint64_t call_pixelColorAt(uint64_t x, uint64_t y);
 #endif

@@ -82,5 +82,8 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 		case 14:
 				sleeps(rdi);
 				break;
+		case 15:
+				pixelColorAt(rdi, rsi);
+				break;
 	}
 }

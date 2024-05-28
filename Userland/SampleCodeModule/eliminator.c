@@ -222,24 +222,26 @@ void updateSnake(Snake *snake) {
 bool checkCollision(Snake *snake1, Snake *snake2) {
     Segment head = snake1->segments[0];
 
+    
+
     // Colisión con los bordes
-    if (head.x < 0 || head.x >= SCREEN_WIDTH || head.y < 0 || head.y >= SCREEN_HEIGHT) {
-        return true;
-    }
+    // if (head.x < 0 || head.x >= SCREEN_WIDTH || head.y < 0 || head.y >= SCREEN_HEIGHT) {
+    //     return true;
+    // }
 
-    // Colisión con el propio cuerpo
-    for (int i = 1; i < snake1->length; i++) {
-        if (head.x == snake1->segments[i].x && head.y == snake1->segments[i].y) {
-            return true;
-        }
-    }
+    // // Colisión con el propio cuerpo
+    // for (int i = 1; i < snake1->length; i++) {
+    //     if (head.x == snake1->segments[i].x && head.y == snake1->segments[i].y) {
+    //         return true;
+    //     }
+    // }
 
-    //Colision con la otra snake
-    for (int i = 1; i < snake2->length; i++) {
-        if (head.x == snake2->segments[i].x && head.y == snake2->segments[i].y) {
-            return true;
-        }
-    }
+    // //Colision con la otra snake
+    // for (int i = 1; i < snake2->length; i++) {
+    //     if (head.x == snake2->segments[i].x && head.y == snake2->segments[i].y) {
+    //         return true;
+    //     }
+    // }
 
     return false;
 }

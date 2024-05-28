@@ -57,3 +57,5 @@ call_sleepms:
     call_handler 13
 call_sleeps:
     call_handler 14
+call_pixelColorAt:
+    call_handler 15
