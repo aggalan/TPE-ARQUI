@@ -205,7 +205,7 @@ bool updateSnake(Snake *snake) {
 
     uint64_t color = call_pixelColorAt(snake->head.x, snake->head.y);
 
-    if(color != 0x0000000000000000){
+    if(color != 0x00000000){
         collision = true;
     }
 

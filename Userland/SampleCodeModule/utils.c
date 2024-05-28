@@ -40,13 +40,20 @@ int strcmp(char * str1, char * str2){
 
 }
 
+char toUpper(char c) {
+    if (c >= 'a' && c <= 'z') {
+        return c - 32;
+    }
+    return c;
+}
+
 
 int strcmpspace(char *str1, char *str2) {
     // Compare characters up to the first space in both strings
     int i = 0;
     while (str1[i] != '\0' && str2[i] != '\0' && !null_or_space(str2[i])) {
-        if (str1[i] != str2[i]) {
-            return str1[i] > str2[i] ? 1 : -1;
+        if (toUpper(str1[i]) != toUpper(str2[i])) {
+            return toUpper(str1[i]) > toUpper(str2[i]) ? 1 : -1;
         }
         i++;
     }

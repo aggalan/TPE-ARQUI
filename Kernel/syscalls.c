@@ -5,6 +5,15 @@
 #include <keyboardDriver.h>
 #include <interrupts.h>
 
+static int shift = 0;
+
+void shift_active() {
+    shift = 1;
+}
+
+void shift_dropped() {
+    shift = 0;
+}
 
 void sys_write(const char * buff, int len, int fd){
 
@@ -28,7 +37,15 @@ void sys_read(char * c, int len, int fd){
             _hlt();
             aux = getBuffAtCurrent();
             if (aux > 0 && aux <= 255) {
-                c[i++] = ScanCodes[(int)aux].make;
+
+
+                if (shift == 1 && ScanCodes[(int)aux].make >= 'a' && ScanCodes[(int)aux].make <= 'z') {
+                    c[i++] = ScanCodes[(int)aux].make - 32;
+                } else {
+                    c[i++] = ScanCodes[(int)aux].make;
+                }
+
+
                 consume();
             }
 
