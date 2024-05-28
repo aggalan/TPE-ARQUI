@@ -134,6 +134,7 @@ void start_game(){
         key = call_get_charAt(pos++ - 1);  // Obtener entrada del teclado (bloqueante)
         handleInput(key);
         updateGame();
+        call_sleepms(100 / speed); 
     }
 
     return 0;

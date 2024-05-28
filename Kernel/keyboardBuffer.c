@@ -6,31 +6,31 @@ static struct kbuff buff = {0, 0, {'\0'}};
 static buffer_ptr ptr = &buff;
 
 void buffer_append(char c) {
-    if (buff.pos < BUFFER_LIMIT-1) {
-        buff.buffer[buff.pos] = c;
-        buff.pos += 1;
-        buff.buffer[buff.pos] = 0;
+    if (ptr->pos < BUFFER_LIMIT-1) {
+        ptr->buffer[ptr->pos] = c;
+        ptr->pos += 1;
+        ptr->buffer[buff.pos] = 0;
     }
     else{
-        buff.pos = 0;
-        buff.buffer[buff.pos] = 0;
+        ptr->pos = 0;
+        ptr->buffer[buff.pos] = 0;
     }
 }
 
 int buffer_len(){
-    return buff.len;
+    return ptr->len;
 }
 
 void setPos(int newPos){
-    buff.pos = newPos;
+    ptr->pos = newPos;
 }
 
 void buffer_clear() {
-    buff.len = 0;
+    ptr->len = 0;
 }
 
 int get_pos() {
-    return buff.pos;
+    return ptr->pos;
 }
 
 uint16_t * get_buff() {
@@ -38,21 +38,21 @@ uint16_t * get_buff() {
 }
 
 char getBuffAtCurrent() {
-    if (buff.pos != 0) {
-        return buff.buffer[buff.pos - 1];
+    if (ptr->pos != 0) {
+        return ptr->buffer[buff.pos - 1];
     }
-    return buff.buffer[BUFFER_LIMIT-1];
+    return ptr->buffer[BUFFER_LIMIT-1];
 }
 
 char getBuffCharAt(int pos){
-    return buff.buffer[pos];
+    return ptr->buffer[pos];
 }
 
 void consume() {
-    if (buff.pos < BUFFER_LIMIT-1) {
-        buff.pos += 1;
+    if (ptr->pos < BUFFER_LIMIT-1) {
+        ptr->pos += 1;
     } else {
-        buff.pos = 0;
+        ptr->pos = 0;
     }
 }
 

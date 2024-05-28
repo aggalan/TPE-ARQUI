@@ -14,6 +14,8 @@ GLOBAL call_handler
 GLOBAL call_pixelColorAt
 GLOBAL call_get_pos
 GLOBAL call_get_charAt
+GLOBAL call_sleepms
+GLOBAL call_sleeps
 
 section .text
 
