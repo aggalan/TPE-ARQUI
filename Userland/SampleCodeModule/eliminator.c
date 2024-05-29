@@ -4,6 +4,7 @@
 #include "userSyscalls.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include "sounds.h"
 
 // Constantes del juego
 #define SCREEN_WIDTH 1024
@@ -131,7 +132,9 @@ void menu(){
 }
 
 void start_game(){
+    game_start();
     initializeGame();
+
     int pos = call_get_pos();
     char key;
 
@@ -273,7 +276,7 @@ bool updateSnake(Snake *snake) {
 
 
 void updateGame() {
-
+    snake_movement();
     if (updateSnake(&player1)|| updateSnake(&player2)) {
        game_over();
        if(quit){
@@ -294,6 +297,7 @@ void drawMargins(){
 }
 
 void game_over(){
+    collision();
     call_paint_screen(BLACK);
     call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 100);
     call_drawWordColorAt("Press [Q] to return to menu\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 50);

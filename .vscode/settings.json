@@ -4,6 +4,8 @@
         "interrupts.h": "c",
         "naiveconsole.h": "c",
         "keyboardbuffer.h": "c",
-        "keyboarddriver.h": "c"
+        "keyboarddriver.h": "c",
+        "usersyscalls.h": "c",
+        "stdint.h": "c"
     }
 }
