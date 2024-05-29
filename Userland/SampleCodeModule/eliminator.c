@@ -102,6 +102,7 @@ void print_menu(){
     call_drawWordColorAt("LEVEL: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
     call_drawWordColorAt("[SPACE] to begin game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
     call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
+    call_drawWordColorAt("[Q] to return to the shell\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 384);
 }
 
 void menu(){
@@ -120,20 +121,19 @@ void menu(){
 
 void start_game(){
 
-    if(quit){
-        return;
-    }
-
     initializeGame();
 
-    int pos = 0;
+    int pos = 1;
     char key;
+    // pos <= call_get_pos()
 
-    while (pos <= call_get_pos()) {
-
+    while (1) {
         key = call_get_charAt(pos++ - 1);  // Obtener entrada del teclado (bloqueante)
         handleInput(key);
         updateGame();
+        if(quit){
+            return;
+        }
         call_sleepms(100 / speed); 
     }
 
@@ -153,10 +153,10 @@ void drawSegment(Segment seg, uint64_t color) {
 
 void handleInput(char key) {
     switch (key) {
-        case 'w':  // Mover jugador 1 hacia arriba
+        case 'W':  // Mover jugador 1 hacia arriba
             player1.direction = UP;
             break;
-        case 's':  // Mover jugador 1 hacia abajo
+        case 'S':  // Mover jugador 1 hacia abajo
             player1.direction = DOWN;
             break;
         case 'a':  // Mover jugador 1 hacia la izquierda
@@ -242,6 +242,9 @@ void updateGame() {
 
     if (updateSnake(&player1)|| updateSnake(&player2)) {
        game_over();
+       if(quit){
+           return;
+       }
     }
 }
 
@@ -258,8 +261,9 @@ void drawMargins(){
 
 void game_over(){
     call_paint_screen(BLACK);
-    call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
-    call_drawWordColorAt("Press q to exit, other to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 + 40);
+    call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 100);
+    call_drawWordColorAt("Press [Q] to return to menu\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 50);
+    call_drawWordColorAt("Press any other key to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 10);
     if(getCh() == 'q'){
         quit = true;
     }

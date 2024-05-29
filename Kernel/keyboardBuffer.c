@@ -5,6 +5,8 @@
 static struct kbuff buff = {0, 0, {'\0'}};
 static buffer_ptr ptr = &buff;
 
+int buffer_pos = 0;
+
 void buffer_append(char c) {
     if (ptr->pos < BUFFER_LIMIT-1) {
         ptr->buffer[ptr->pos] = c;
