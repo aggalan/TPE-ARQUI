@@ -33,6 +33,15 @@ void buffer_clear() {
     ptr->len = 0;
 }
 
+void buffer_clearAll(){
+    ptr->pos = 0;
+    ptr->len = 0;
+    for (int i = 0; i < BUFFER_LIMIT; i++) {
+        ptr->buffer[i] = 0;
+    }
+
+}
+
 int get_pos() {
     return ptr->pos;
 }

@@ -117,22 +117,21 @@ void print_menu(){
 }
 
 void menu(){
-    quit = false;
     while(1){
-    call_paint_screen(BLACK);
-    print_menu();
-    char option = getCh();
-    switch (option){
-    case 'q':
-        return;
-    case ' ':
-        start_game();
-    }
+        quit = false;
+        call_paint_screen(BLACK);
+        print_menu();
+        char option = getCh();
+        switch (option){
+        case 'q':
+            return;
+        case ' ':
+            start_game();
+        }
     }
 }
 
 void start_game(){
-    game_start();
     initializeGame();
 
     int pos = call_get_pos();
@@ -276,8 +275,7 @@ bool updateSnake(Snake *snake) {
 
 
 void updateGame() {
-    snake_movement();
-    if (updateSnake(&player1)|| updateSnake(&player2)) {
+     if (updateSnake(&player1)|| updateSnake(&player2)) {
        game_over();
        if(quit){
            return;
@@ -305,6 +303,6 @@ void game_over(){
     if(getCh() == 'q'){
         quit = true;
     }
-    call_clear_buff();
+   // call_clear_buff();
     start_game();
 }
