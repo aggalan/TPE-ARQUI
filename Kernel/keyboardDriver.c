@@ -49,8 +49,12 @@ void keyboard_handler(){
         register_snapshot_taken = 1;
         return;
     }
+
+    if (key != 0x2A && key != 0x36 ) {
+        buffer_append(key);
+    }
     
-     buffer_append(key);
+
 
 
 }
