@@ -25,8 +25,6 @@ void line_start(){
     clearBuff(buff);
 }
 
-// lee caracteres y los almacena en el buffer hasta que:
-// El buff se llene, se encuentre un backspace o un enter
 
 void bufferize(){
     

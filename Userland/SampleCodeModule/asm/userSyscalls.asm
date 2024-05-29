@@ -16,14 +16,14 @@ GLOBAL call_get_pos
 GLOBAL call_get_charAt
 GLOBAL call_sleepms
 GLOBAL call_sleeps
+GLOBAL call_clear_buff
 
 section .text
 
 %macro call_handler 1
     push rbp
     mov rbp, rsp
-
-    ;;faltan los demas registros
+    
     mov rax, %1
     int 80h
 
@@ -67,3 +67,5 @@ call_get_pos:
     call_handler 16
 call_get_charAt:
     call_handler 17
+call_clear_buff:
+    call_handler 18

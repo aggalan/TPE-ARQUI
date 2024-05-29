@@ -48,7 +48,7 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 				sys_read((char *)rdi, rsi, rdx);
 				break;
 		case 3: 
-				TimeClock((char *)rdi); //chequear
+				TimeClock((char *)rdi); 
 				break;
 		case 4:
 				printRegistersASM(); 
@@ -91,6 +91,9 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 				break;
 		case 17:
 				return getBuffCharAt(rdi);
+				break;
+		case 18:
+				buffer_clear();
 				break;
 				
 	}

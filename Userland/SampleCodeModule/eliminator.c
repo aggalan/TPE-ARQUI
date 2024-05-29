@@ -30,6 +30,16 @@ uint32_t START_X = 100;
 uint32_t START_Y = 20;
 
 
+uint64_t player1Up = 0x11;
+uint64_t player1Down = 0x1F;
+uint64_t player1Left = 0x1E;
+uint64_t player1Right = 0x20;
+
+uint64_t player2Up = 0x17;
+uint64_t player2Down = 0x25;
+uint64_t player2Left = 0x24;
+uint64_t player2Right = 0x26;
+
 uint32_t CONFIG_X;
 uint32_t CONFIG_Y;
 unsigned int players = DEFAULT_PLAYERS;
@@ -106,6 +116,7 @@ void print_menu(){
 }
 
 void menu(){
+    quit = false;
     while(1){
     call_paint_screen(BLACK);
     print_menu();
@@ -120,21 +131,27 @@ void menu(){
 }
 
 void start_game(){
-
     initializeGame();
-
-    int pos = 1;
+    int pos = call_get_pos();
     char key;
-    // pos <= call_get_pos()
 
     while (1) {
-        key = call_get_charAt(pos++ - 1);  // Obtener entrada del teclado (bloqueante)
+        key = call_get_charAt(pos-1);  // Obtener entrada del teclado (bloqueante)
+        if(key != 0){
+            pos++;
+        }
         handleInput(key);
         updateGame();
         if(quit){
             return;
         }
-        call_sleepms(100 / speed); 
+        
+        call_sleepms(speed);
+        //call_clear_buff();
+        //si spameas se guarda el buffer y se ejecutan las acciones viejas
+        //podemos usar el call_get_key()? uWu
+
+
     }
 
     return 0;
@@ -151,33 +168,50 @@ void drawSegment(Segment seg, uint64_t color) {
 
 
 
+
 void handleInput(char key) {
-    switch (key) {
-        case 'W':  // Mover jugador 1 hacia arriba
-            player1.direction = UP;
-            break;
-        case 'S':  // Mover jugador 1 hacia abajo
-            player1.direction = DOWN;
-            break;
-        case 'a':  // Mover jugador 1 hacia la izquierda
-            player1.direction = LEFT;
-            break;
-        case 'd':  // Mover jugador 1 hacia la derecha
-            player1.direction = RIGHT;
-            break;
-        case 'i':  // Mover jugador 2 hacia arriba
-            player2.direction = UP;
-            break;
-        case 'k':  // Mover jugador 2 hacia abajo
+        if(key == player1Up){
+            if(player1.direction != DOWN){
+                player1.direction = UP;
+            }
+        }
+        else if(key == player1Down){
+            if(player1.direction != UP){
+               player1.direction = DOWN; 
+            }
+        }
+        else if(key == player1Left){
+            if(player1.direction != RIGHT){
+                player1.direction = LEFT;
+            }
+            }
+        else if(key == player1Right){
+            if(player1.direction != LEFT){
+                player1.direction = RIGHT;
+            }
+
+        }
+        else if(key == player2Up){
+            if(player2.direction != DOWN){
+                player2.direction = UP;
+            }
+
+        }
+        else if(key == player2Down){
+            if(player2.direction != UP){
             player2.direction = DOWN;
-            break;
-        case 'j':  // Mover jugador 2 hacia la izquierda
-            player2.direction = LEFT;
-            break;
-        case 'l':  // Mover jugador 2 hacia la derecha
-            player2.direction = RIGHT;
-            break;
-    }
+            }
+        }
+        else if(key == player2Left){
+            if(player2.direction != RIGHT){
+                player2.direction = LEFT;
+            }
+        }
+        else if(key == player2Right){
+            if(player2.direction != LEFT){
+                player2.direction = RIGHT;
+            }
+        }
 }
 
 void initializeGame() {
@@ -267,5 +301,6 @@ void game_over(){
     if(getCh() == 'q'){
         quit = true;
     }
+    call_clear_buff();
     start_game();
 }

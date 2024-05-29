@@ -2,6 +2,8 @@
     "files.associations": {
         "sounddriver.h": "c",
         "interrupts.h": "c",
-        "naiveconsole.h": "c"
+        "naiveconsole.h": "c",
+        "keyboardbuffer.h": "c",
+        "keyboarddriver.h": "c"
     }
 }

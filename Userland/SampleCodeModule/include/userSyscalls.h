@@ -26,5 +26,6 @@ void call_sleeps(int s);
 uint64_t call_pixelColorAt(uint64_t x, uint64_t y);
 int call_get_pos();
 char call_get_charAt(int pos);
+void call_clear_buff();
 
 #endif
