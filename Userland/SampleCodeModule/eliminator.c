@@ -16,7 +16,7 @@
 #define RIGHT 3
 #define DEFAULT_LEVEL 1
 #define DEFAULT_SPEED 2
-#define DEFAULT_PLAYERS 1
+#define DEFAULT_PLAYERS 2
 
 uint64_t DEFAULT_BCOLOR = BLACK;
 uint64_t DEFAULT_FCOLOR = RED;
@@ -46,6 +46,9 @@ uint32_t CONFIG_Y;
 unsigned int players = DEFAULT_PLAYERS;
 unsigned int speed = DEFAULT_SPEED;
 unsigned int level = DEFAULT_LEVEL;
+unsigned int player1Deaths = 0;
+unsigned int player2Deaths = 0;
+
 
 
 typedef struct {
@@ -127,13 +130,21 @@ void menu(){
             return;
         case ' ':
             start_game();
+        // case '\n':
+        //     change_settings();
+        // }
         }
     }
 }
 
 void start_game(){
-    initializeGame();
-
+    if(players == 1){
+        initializeGame();
+    }
+    else{
+        initializeGameTwoPlayers();
+    }
+    
     int pos = call_get_pos();
     char key;
 
@@ -149,9 +160,8 @@ void start_game(){
         }
         
         call_sleepms(speed);
-        //call_clear_buff();
-        //si spameas se guarda el buffer y se ejecutan las acciones viejas
-        //podemos usar el call_get_key()? uWu
+
+        
 
 
     }
@@ -175,48 +185,75 @@ void handleInput(char key) {
         if(key == player1Up){
             if(player1.direction != DOWN){
                 player1.direction = UP;
+                return;
             }
         }
         else if(key == player1Down){
             if(player1.direction != UP){
                player1.direction = DOWN; 
+               return;
             }
         }
         else if(key == player1Left){
             if(player1.direction != RIGHT){
                 player1.direction = LEFT;
+                return;
             }
             }
         else if(key == player1Right){
             if(player1.direction != LEFT){
                 player1.direction = RIGHT;
+                return;
             }
 
         }
         else if(key == player2Up){
             if(player2.direction != DOWN){
                 player2.direction = UP;
+                return;
             }
 
         }
         else if(key == player2Down){
-            if(player2.direction != UP){
-            player2.direction = DOWN;
+                if(player2.direction != UP){
+                player2.direction = DOWN;
+                return;
             }
         }
         else if(key == player2Left){
             if(player2.direction != RIGHT){
                 player2.direction = LEFT;
+                return;
             }
         }
         else if(key == player2Right){
             if(player2.direction != LEFT){
                 player2.direction = RIGHT;
+                return;
             }
         }
 }
 
-void initializeGame() {
+void initializeGame(){
+    for(int i = 0; i < SCREEN_WIDTH; i++){
+        for(int j = 0; j < SCREEN_HEIGHT; j++){
+            board[i][j] = 0;
+        }
+    }
+
+    player1.direction = UP;
+    player1.color = RED;
+    player1.head.x = SCREEN_WIDTH / 2;
+    player1.head.y = SCREEN_HEIGHT - 25;
+
+    call_paint_screen(BLACK);
+
+    drawMargins();
+    drawSegment(player1.head, player1.color);
+
+}
+
+void initializeGameTwoPlayers() {
 
     for(int i = 0; i < SCREEN_WIDTH; i++){
         for(int j = 0; j < SCREEN_HEIGHT; j++){
@@ -275,11 +312,30 @@ bool updateSnake(Snake *snake) {
 
 
 void updateGame() {
-     if (updateSnake(&player1)|| updateSnake(&player2)) {
-       game_over();
-       if(quit){
-           return;
-       }
+    bool player1Status = updateSnake(&player1);
+    bool player2Status = updateSnake(&player2);
+    if(player1Status && player2Status){
+        game_over();
+        player1Deaths++;
+        player2Deaths++;
+        if(quit){
+            return;
+        }
+    }else{
+        if(player1Status){
+            game_over();
+            player1Deaths++;
+            if(quit){
+                return;
+            }
+        }
+        if(player2Status){
+            game_over();
+            player2Deaths++;
+            if(quit){
+                return;
+            }
+        }
     }
 }
 
@@ -300,9 +356,10 @@ void game_over(){
     call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 100);
     call_drawWordColorAt("Press [Q] to return to menu\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 50);
     call_drawWordColorAt("Press any other key to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 10);
-    if(getCh() == 'q'){
-        quit = true;
-    }
+    // if(getCh() == 'q'){
+    //     quit = true;
+    // }
+    
    // call_clear_buff();
     start_game();
 }
