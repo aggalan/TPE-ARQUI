@@ -37,8 +37,6 @@ void sys_read(char * c, int len, int fd){
             _hlt();
             aux = getBuffAtCurrent();
             if (aux > 0 && aux <= 256) {
-
-
                 if ( shift != 0 && ScanCodes[(int)aux].make >= 'a' && ScanCodes[(int)aux].make <= 'z') {
                     c[i++] = ScanCodes[(int)aux].make - 32;
                 } else {

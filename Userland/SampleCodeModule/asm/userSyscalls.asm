@@ -19,6 +19,7 @@ GLOBAL call_sleeps
 GLOBAL call_clear_buff
 GLOBAL call_move_screen_right
 GLOBAL call_eliminator_flag_on
+GLOBAL call_eliminator_flag_off
 
 section .text
 
@@ -75,3 +76,5 @@ call_move_screen_right:
     call_handler 19
 call_eliminator_flag_on:
     call_handler 20
+call_eliminator_flag_off:
+    call_handler 21

@@ -103,6 +103,9 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 		case 20:
 				eliminatorFlag = true;
 				break;
+		case 21:
+				eliminatorFlag = false;
+				break;
 		default:
 				return 0;
 				

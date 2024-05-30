@@ -38,6 +38,7 @@ void callCommand(int i, char * command){
         case ELIMINATOR:;
             call_eliminator_flag_on();
             eliminator();
+            call_eliminator_flag_off();
             return;
         case INCFONT:;
             call_size_up();

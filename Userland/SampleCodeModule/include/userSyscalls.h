@@ -30,4 +30,5 @@ void call_clear_buff();
 void call_move_screen_right();
 void call_reg_state();
 void call_eliminator_flag_on();
+void call_eliminator_flag_off();
 #endif
