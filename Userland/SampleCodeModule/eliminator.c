@@ -41,6 +41,12 @@ uint64_t player2Down = 0x25;
 uint64_t player2Left = 0x24;
 uint64_t player2Right = 0x26;
 
+uint64_t QUIT = 0x10;
+uint64_t SPACE = 0x39;
+uint64_t ENTER = 0x1C;
+uint64_t SPEEDKEY = 0x1F;
+uint64_t PLAYERSKEY = 0x19;
+
 uint32_t CONFIG_X;
 uint32_t CONFIG_Y;
 unsigned int players = DEFAULT_PLAYERS;
@@ -48,6 +54,7 @@ unsigned int speed = DEFAULT_SPEED;
 unsigned int level = DEFAULT_LEVEL;
 unsigned int player1Deaths = 0;
 unsigned int player2Deaths = 0;
+
 
 
 
@@ -110,30 +117,67 @@ void print_start(){
 }
 
 void print_menu(){
+    char playerStr[5], speedStr[5];
+    intToStr(players, playerStr, 10);
+    intToStr(speed, speedStr, 10);
     call_paint_screen(BLACK);
     call_drawWordColorAt("PLAYERS: ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
+    call_drawWordColorAt(playerStr, DEFAULT_FCOLOR, MENU_X + 175, MENU_Y);
     call_drawWordColorAt("SPEED: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 64);
+    call_drawWordColorAt(speedStr, DEFAULT_FCOLOR, MENU_X + 125, MENU_Y + 64);
     call_drawWordColorAt("LEVEL: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
     call_drawWordColorAt("[SPACE] to begin game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
     call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
     call_drawWordColorAt("[Q] to return to the shell\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 384);
 }
 
+void print_settings(){
+    call_paint_screen(BLACK);
+    call_drawWordColorAt("[P] to change player number ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
+    call_drawWordColorAt("[S] to change game speed ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 64);
+    call_drawWordColorAt("[Q] to return to menu", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
+}
+
 void menu(){
+    char option;
+    int posMenu;
+    print_menu();
     while(1){
-        quit = false;
-        call_paint_screen(BLACK);
-        print_menu();
-        char option = getCh();
-        switch (option){
-        case 'q':
-            return;
-        case ' ':
-            start_game();
-        // case '\n':
-        //     change_settings();
-        // }
+        if(quit){
+            print_menu();
         }
+        posMenu = call_get_pos();
+        quit = false;
+        option = call_get_charAt(posMenu-1);
+        if(option == QUIT){
+            return;
+        }else if (option == SPACE){
+            start_game();
+        }else if(option == ENTER){
+            change_settings();
+            quit = false;
+        }
+    }
+}
+
+void change_settings(){
+    print_settings();
+    char settingsOption;
+    int settingsPos;
+    while(1){
+        settingsPos = call_get_pos();
+        settingsOption = call_get_charAt(settingsPos - 1);
+        if(settingsOption == PLAYERSKEY){
+            if(players == 1)
+                players = 2;
+            if(players == 2)
+                players = 1; 
+        }
+        if(settingsOption == SPEEDKEY){
+            speed++;
+        }
+        if(settingsOption == QUIT)
+            menu();
     }
 }
 
@@ -147,7 +191,7 @@ void start_game(){
     
     int pos = call_get_pos();
     char key;
-
+    
     while (1) {
         key = call_get_charAt(pos-1);  // Obtener entrada del teclado (bloqueante)
         if(key != 0){
@@ -158,14 +202,8 @@ void start_game(){
         if(quit){
             return;
         }
-        
         call_sleepms(speed);
-
-        
-
-
     }
-
     return 0;
 }
 
@@ -177,8 +215,6 @@ void drawSegment(Segment seg, uint64_t color) {
         }
     }
 }
-
-
 
 
 void handleInput(char key) {
@@ -232,7 +268,23 @@ void handleInput(char key) {
                 return;
             }
         }
+        // else if(key == PLAYERSKEY){
+        //     pause();
+        // }
 }
+
+// void pause(){
+//     int posPause = call_get_pos();
+//     char keyPause;
+    
+//     while (1) {
+//         keyPause = call_get_charAt(posPause-1);  // Obtener entrada del teclado (bloqueante)
+//         if(keyPause == QUIT){
+//             return;
+//         }
+//     }
+
+// }
 
 void initializeGame(){
     for(int i = 0; i < SCREEN_WIDTH; i++){
@@ -273,7 +325,7 @@ void initializeGameTwoPlayers() {
 
     call_paint_screen(BLACK);
 
-     drawMargins();
+    drawMargins();
 
     drawSegment(player1.head, player1.color);
     drawSegment(player2.head, player2.color);
@@ -298,7 +350,6 @@ bool updateSnake(Snake *snake) {
             break;
     }
 
-
     for(int i = 0; i < PLAYER_SIZE; i++){
         for(int j = 0; j < PLAYER_SIZE; j++){
             if(board[snake->head.x + i][snake->head.y + j] != 0){
@@ -315,29 +366,46 @@ void updateGame() {
     bool player1Status = updateSnake(&player1);
     bool player2Status = updateSnake(&player2);
     if(player1Status && player2Status){
-        game_over();
         player1Deaths++;
         player2Deaths++;
+        game_over();
         if(quit){
             return;
         }
     }else{
         if(player1Status){
-            game_over();
             player1Deaths++;
+            game_over();
             if(quit){
                 return;
             }
         }
-        if(player2Status){
-            game_over();
+        else if(player2Status){
             player2Deaths++;
+            game_over();
             if(quit){
                 return;
             }
         }
     }
 }
+
+void drawDeathCounter(){
+    char deathCount1[5], deathCount2[5];
+    intToStr(player1Deaths,deathCount1, 10);
+    intToStr(player2Deaths, deathCount2, 10);
+
+    if(players == 1){ //1 jugador
+        call_drawWordColorAt("Player 1 deaths: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
+        call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 150, SCREEN_HEIGHT /2 -300);
+    }else{
+        call_drawWordColorAt("Player 1 deaths: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
+        call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT / 2 - 300);
+        call_drawWordColorAt("Player 2 deaths: ",DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 200);
+        call_drawWordColorAt(deathCount2,  DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT / 2 - 200);
+    }    
+}
+
 
 void drawMargins(){
     for(int i = 20; i < SCREEN_WIDTH; i++){
@@ -355,11 +423,19 @@ void game_over(){
     call_paint_screen(BLACK);
     call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 100);
     call_drawWordColorAt("Press [Q] to return to menu\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 50);
-    call_drawWordColorAt("Press any other key to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 10);
-    // if(getCh() == 'q'){
-    //     quit = true;
-    // }
+    call_drawWordColorAt("Press Space to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 10);
+    int game_overPos;
+    char e;
+    drawDeathCounter();
+    while(1){
+        game_overPos = call_get_pos();
+        e = call_get_charAt(game_overPos - 1);
+        if(e == QUIT){
+            quit = true;
+            return;
+        }else if (e == SPACE){
+            start_game();
+        }
+    }
     
-   // call_clear_buff();
-    start_game();
 }
