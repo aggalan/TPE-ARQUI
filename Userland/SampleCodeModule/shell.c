@@ -86,7 +86,7 @@ void bufferize(){
             }
             flag = 1;
         }
-        else if (c == 0x7B) {
+        else if (c == 0x7F) {
             if (prev_num < COMMAND_SIZE-1 && prev_commands[prev_num+1][0] != 0) {
                 delete(i);
                 clearBuff(buff);
@@ -101,7 +101,7 @@ void bufferize(){
             flag = 1;
 
         }
-        else if (c == 0x7A) {
+        else if (c == 0x7B) {
             if (prev_num > 0) {
                 delete(i);
                 clearBuff(buff);
