@@ -29,7 +29,7 @@ int main() {
 	// print("This is test: %c\n", '4');
 
 
-	shell_start();
+	shellStart();
 	//Test if BSS is properly set up
 	if (var1 == 0 && var2 == 0)
 		return 0xDEADC0DE;

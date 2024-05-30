@@ -8,17 +8,17 @@
 
 static char commands[COMMANDS_SIZE][14] = {"HELP", "TIME", "REGSTATE", "DIVZERO", "INVALIDOP", "ELIMINATOR", "INCFONT", "DECFONT","FONTSIZE", "CLEAR" };
 
-void seek_command(char * buff){
+void seekCommand(char * buff){
     for(int i = 0; i < COMMANDS_SIZE; i++){
         if(strcmpspace(commands[i], buff) == 0){
-            call_command(i, buff);
+            callCommand(i, buff);
             return;
         } 
     }
-    call_command(-1, buff); 
+    callCommand(-1, buff); 
 }
 
-void call_command(int i, char * command){
+void callCommand(int i, char * command){
     switch(i){
         case HELP:;
             help();

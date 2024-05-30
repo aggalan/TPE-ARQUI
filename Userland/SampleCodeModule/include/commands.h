@@ -3,12 +3,13 @@
 
 #define COMMANDS_SIZE 10
 
-void seek_command(char * buff);
-void call_command(int i, char * command);
+void seekCommand(char * buff);
+void callCommand(int i, char * command);
 void help();
 void time();
 void div0();
 void invalidOp();
+void eliminator();
 
 enum Commands {
     HELP,

@@ -6,18 +6,6 @@
 #include <stdbool.h>
 #include "sounds.h"
 
-// Constantes del juego
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 760
-#define PLAYER_SIZE 10
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
-#define DEFAULT_LEVEL 1
-#define DEFAULT_SPEED 2
-#define DEFAULT_PLAYERS 2
-
 uint64_t DEFAULT_BCOLOR = BLACK;
 uint64_t DEFAULT_FCOLOR = RED;
 
@@ -46,6 +34,7 @@ uint64_t SPACE = 0x39;
 uint64_t ENTER = 0x1C;
 uint64_t SPEEDKEY = 0x1F;
 uint64_t PLAYERSKEY = 0x19;
+uint64_t ESC = 0x01;
 
 uint32_t CONFIG_X;
 uint32_t CONFIG_Y;
@@ -57,16 +46,6 @@ unsigned int player2Deaths = 0;
 
 
 
-
-typedef struct {
-    uint64_t x, y;
-} Segment;
-
-typedef struct {
-    Segment head;
-    int direction;
-    uint64_t color;
-} Snake;
 
 Snake player1;
 Snake player2;
@@ -102,21 +81,22 @@ bool quit = false;
 //
 
 void eliminator(){
+    speed = DEFAULT_SPEED;
     call_size_up();
-    print_start();
+    printStart();
     getCh();
     menu();
     call_size_down();
     }
 
 
-void print_start(){
+void printStart(){
     call_paint_screen(DEFAULT_BCOLOR);
-    call_drawWordColorAt("ELIMINATOR\n", DEFAULT_FCOLOR, START_X, START_Y);
-    call_drawWordColorAt("Press any key to start\n", DEFAULT_FCOLOR , START_X, START_Y + 64);
+    call_drawWordColorAt("ELIMINATOR\n",DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 100);
+    call_drawWordColorAt("Press any key to start\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 220, SCREEN_HEIGHT / 2 );
 }
 
-void print_menu(){
+void printMenu(){
     char playerStr[5], speedStr[5];
     intToStr(players, playerStr, 10);
     intToStr(speed, speedStr, 10);
@@ -128,10 +108,10 @@ void print_menu(){
     call_drawWordColorAt("LEVEL: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
     call_drawWordColorAt("[SPACE] to begin game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
     call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
-    call_drawWordColorAt("[Q] to return to the shell\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 384);
+    call_drawWordColorAt("[ESC] to return to the shell\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 384);
 }
 
-void print_settings(){
+void printSettings(){
     call_paint_screen(BLACK);
     call_drawWordColorAt("[P] to change player number ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
     call_drawWordColorAt("[S] to change game speed ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 64);
@@ -141,53 +121,56 @@ void print_settings(){
 void menu(){
     char option;
     int posMenu;
-    print_menu();
+    printMenu();
     while(1){
-        if(quit){
-            print_menu();
-        }
         posMenu = call_get_pos();
         quit = false;
         option = call_get_charAt(posMenu-1);
-        if(option == QUIT){
+        if(option == ESC){
             return;
         }else if (option == SPACE){
-            start_game();
+            if(players == 1){
+                startGameOnePlayer();
+            }else if (players == 2){
+                startGameTwoPlayers();
+            }
         }else if(option == ENTER){
-            change_settings();
-            quit = false;
+            changeSettings();
+            printMenu();
         }
     }
 }
 
-void change_settings(){
-    print_settings();
+void changeSettings(){
+    printSettings();
     char settingsOption;
     int settingsPos;
     while(1){
         settingsPos = call_get_pos();
         settingsOption = call_get_charAt(settingsPos - 1);
         if(settingsOption == PLAYERSKEY){
-            if(players == 1)
+            if(players == 1){
                 players = 2;
-            if(players == 2)
+                return;
+            }
+            else if(players == 2){
                 players = 1; 
+                return;
+            }
         }
         if(settingsOption == SPEEDKEY){
-            speed++;
+            speed += 1;
+            return;
         }
         if(settingsOption == QUIT)
-            menu();
+            return;
     }
 }
 
-void start_game(){
-    if(players == 1){
-        initializeGame();
-    }
-    else{
-        initializeGameTwoPlayers();
-    }
+void startGameTwoPlayers(){
+    player1Deaths = 0;
+    player2Deaths = 0;
+    initializeGameTwoPlayers();
     
     int pos = call_get_pos();
     char key;
@@ -198,13 +181,37 @@ void start_game(){
             pos++;
         }
         handleInput(key);
-        updateGame();
+        updateGameTwoPlayers();
         if(quit){
+            printMenu();
+            return;
+        }
+        call_sleepms(10/speed);
+    }
+    return;
+}
+void startGameOnePlayer(){
+    player1Deaths = 0;
+    initializeGame();
+    
+    int pos = call_get_pos();
+    char key;
+    
+    while (1) {
+        key = call_get_charAt(pos-1);  // Obtener entrada del teclado (bloqueante)
+        if(key != 0){
+            pos++;
+        }
+        handleInput(key);
+        updateGameOnePlayer();
+        if(quit){
+            printMenu();
             return;
         }
         call_sleepms(speed);
     }
-    return 0;
+    return;
+
 }
 
 void drawSegment(Segment seg, uint64_t color) {
@@ -361,29 +368,39 @@ bool updateSnake(Snake *snake) {
     return collision;
 }
 
+void updateGameOnePlayer(){
+    if(updateSnake(&player1)){
+        player1Deaths++;
+        gameOver();
+        if(quit){
+            return;
+        }
+    }
+}
 
-void updateGame() {
+void updateGameTwoPlayers() {
     bool player1Status = updateSnake(&player1);
     bool player2Status = updateSnake(&player2);
     if(player1Status && player2Status){
         player1Deaths++;
         player2Deaths++;
-        game_over();
+        gameOver();
         if(quit){
             return;
         }
     }else{
         if(player1Status){
             player1Deaths++;
-            game_over();
+            gameOver();
             if(quit){
                 return;
             }
         }
         else if(player2Status){
             player2Deaths++;
-            game_over();
+            gameOver();
             if(quit){
+
                 return;
             }
         }
@@ -397,7 +414,7 @@ void drawDeathCounter(){
 
     if(players == 1){ //1 jugador
         call_drawWordColorAt("Player 1 deaths: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
-        call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 150, SCREEN_HEIGHT /2 -300);
+        call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT /2 -300);
     }else{
         call_drawWordColorAt("Player 1 deaths: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
         call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT / 2 - 300);
@@ -410,7 +427,7 @@ void drawDeathCounter(){
 void drawMargins(){
     for(int i = 20; i < SCREEN_WIDTH; i++){
         for(int j = 10; j < SCREEN_HEIGHT; j++){
-            if(i == 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || i == SCREEN_WIDTH - 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || j == 10  && i >= 20 && i <= SCREEN_WIDTH - 20 || j == SCREEN_HEIGHT - 10 && i >= 20 && i <= SCREEN_WIDTH - 20){
+            if(i == 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || i == SCREEN_WIDTH - 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || j == 10  && i >= 20 && i <= SCREEN_WIDTH - 20 || j == SCREEN_HEIGHT - 10 && i >= 20 && i <= SCREEN_WIDTH - 20){ //poner bien parentesis
                 board[i][j] = RED;
                 call_put_square(i, j, 5, RED);
             }
@@ -418,23 +435,23 @@ void drawMargins(){
     }
 }
 
-void game_over(){
+void gameOver(){
     collision();
     call_paint_screen(BLACK);
     call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 100);
     call_drawWordColorAt("Press [Q] to return to menu\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 50);
     call_drawWordColorAt("Press Space to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 10);
-    int game_overPos;
+    int gameOverPos;
     char e;
     drawDeathCounter();
     while(1){
-        game_overPos = call_get_pos();
-        e = call_get_charAt(game_overPos - 1);
+        gameOverPos = call_get_pos();
+        e = call_get_charAt(gameOverPos - 1);
         if(e == QUIT){
             quit = true;
             return;
         }else if (e == SPACE){
-            start_game();
+            players==1? startGameOnePlayer() : startGameTwoPlayers();
         }
     }
     

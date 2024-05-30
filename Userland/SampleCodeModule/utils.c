@@ -15,11 +15,11 @@ char getCh(){
     return c;
 }
 
-int null_or_space(char c){
+int nullOrSpace(char c){
     return (c == '\0' || c == ' ');
 }
 
-int null_or_newline(char c){
+int nullOrNewline(char c){
     return (c == '\0' || c == '\n');
 }
 
@@ -51,16 +51,16 @@ char toUpper(char c) {
 int strcmpspace(char *str1, char *str2) {
     // Compare characters up to the first space in both strings
     int i = 0;
-    while (str1[i] != '\0' && str2[i] != '\0' && !null_or_space(str2[i])) {
+    while (str1[i] != '\0' && str2[i] != '\0' && !nullOrSpace(str2[i])) {
         if (toUpper(str1[i]) != toUpper(str2[i])) {
             return toUpper(str1[i]) > toUpper(str2[i]) ? 1 : -1;
         }
         i++;
     }
     // If str2 contains space, compare up to that space
-    if (str1[i] == '\0' && null_or_space(str2[i])) {
+    if (str1[i] == '\0' && nullOrSpace(str2[i])) {
         return 0;
-    } else if (null_or_space(str2[i])) {
+    } else if (nullOrSpace(str2[i])) {
         return -1;
     } else {
         return 1;
@@ -170,7 +170,7 @@ int scan(char * fmt, ...){
 int readStr(char * buff){
     int i = 0;
     char c = getCh();
-    while(!null_or_newline(c)){
+    while(!nullOrNewline(c)){
         buff[i++] = c;
         c = getCh();
     }
@@ -180,7 +180,6 @@ int readStr(char * buff){
 
 int readInt(int * num){
     int val = 0;
-    int i = 0;
     char c = getCh();
     int sign = 1;
     if(c == '-'){

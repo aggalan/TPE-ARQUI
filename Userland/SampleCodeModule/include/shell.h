@@ -4,10 +4,11 @@
 #define COMMAND_SIZE 10
 #include "utils.h"
 
-void welcome_message();
-void line_start();
+void welcomeMessage();
+void lineStart();
 void bufferize();
-void read_command(char * buff);
-int shell_start();
-
+void readCommand(char * buff);
+int shellStart();
+void movePrevCommands();
+void delete(int i);
 #endif

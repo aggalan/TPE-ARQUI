@@ -9,10 +9,9 @@
 static char buff[BUFFERLIMIT] = {0};
 static char prev_commands[COMMAND_SIZE][BUFFERLIMIT] = {{0}};
 static int prev_num = 0;
-static int count_num = 0;
 
-void welcome_message(){
-    //call_paint_screen(BLACK);
+void welcomeMessage(){
+    call_paint_screen(BLACK);
     char welcome_message[] = "Welcome to NegrOS.\nInput a command: \n(Enter HELP to see full list of commands)\n";
     for(int i = 0; welcome_message[i] != 0; i++){
         putCh(welcome_message[i]);
@@ -20,7 +19,7 @@ void welcome_message(){
 
 }
 
-void line_start(){
+void lineStart(){
     putCh('$');
     clearBuff(buff);
 }
@@ -31,9 +30,7 @@ void bufferize(){
     int i = 0;
     int end_buff = 0;
     int flag = 0;
-    int timer = 0;
     int max_pos = 0;
-//    call_cursor_on();
     while (i < BUFFERLIMIT){
         char c = getCh();
         end_buff = (i == BUFFERLIMIT-1);
@@ -44,7 +41,6 @@ void bufferize(){
                 }
 //                putCh('\n');
 //                print(buff);
-
                 int j = i;
                 while (buff[j] != 0) {
                     buff[j] = buff[j+1];
@@ -52,7 +48,6 @@ void bufferize(){
                 }
 //                buff[i] == 0;
 //                print(buff);
-
                 max_pos--;
                 putCh(c);
             }
@@ -69,13 +64,13 @@ void bufferize(){
                 return;
             }
             if (prev_num == 0) {
-                move_prev_commands();
+                movePrevCommands();
             }
 
             prev_num = 0;
 
 //            buff[i] = 0;
-            read_command(buff);
+            readCommand(buff);
             return;
         } else if (c == 0x7C){
             if (i > 0) {
@@ -150,7 +145,7 @@ void bufferize(){
 
 }
 
-void move_prev_commands() {
+void movePrevCommands() {
     for (int i = COMMAND_SIZE-1; i > 0; i--) {
         for (int j = 0; j < BUFFERLIMIT; j++) {
             prev_commands[i][j] = prev_commands[i-1][j];
@@ -163,8 +158,8 @@ void move_prev_commands() {
 
 }
 
-void read_command(char * buff){
-    seek_command(buff);
+void readCommand(char * buff){
+    seekCommand(buff);
     clearBuff(buff);
 
 }
@@ -179,11 +174,11 @@ void delete(int i) {
 }
 
 
-int shell_start(){
+int shellStart(){
     call_clear();
-    welcome_message();
+    welcomeMessage();
     while(1){
-        line_start();
+        lineStart();
         bufferize();
     }
     return 0;

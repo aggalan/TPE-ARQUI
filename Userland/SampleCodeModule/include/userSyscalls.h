@@ -9,7 +9,7 @@
 
 void call_sys_read(char *buf, int size, int fd);
 void call_sys_write(char *buf, int size, int fd);
-void call_timeClock(char *buf);
+void call_time_clock(char *buf);
 void call_regState();
 void call_clear();
 void call_size_up();
@@ -27,5 +27,7 @@ uint64_t call_pixelColorAt(uint64_t x, uint64_t y);
 int call_get_pos();
 char call_get_charAt(int pos);
 void call_clear_buff();
+void call_move_screen_right();
+void call_reg_state();
 
 #endif
