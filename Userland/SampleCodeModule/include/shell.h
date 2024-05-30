@@ -1,6 +1,7 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+#define COMMAND_SIZE 10
 #include "utils.h"
 
 void welcome_message();

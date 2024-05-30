@@ -17,6 +17,7 @@ GLOBAL call_get_charAt
 GLOBAL call_sleepms
 GLOBAL call_sleeps
 GLOBAL call_clear_buff
+GLOBAL call_move_screen_right
 
 section .text
 
@@ -69,3 +70,5 @@ call_get_charAt:
     call_handler 17
 call_clear_buff:
     call_handler 18
+call_move_screen_right:
+    call_handler 19

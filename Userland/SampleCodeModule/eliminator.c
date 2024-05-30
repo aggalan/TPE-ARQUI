@@ -356,10 +356,10 @@ void game_over(){
     call_drawWordColorAt("GAME OVER\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 100);
     call_drawWordColorAt("Press [Q] to return to menu\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 50);
     call_drawWordColorAt("Press any other key to continue\n", DEFAULT_FCOLOR, SCREEN_WIDTH / 2 - 300, SCREEN_HEIGHT / 2 - 10);
-    // if(getCh() == 'q'){
-    //     quit = true;
-    // }
+     if(getCh() == 'q'){
+         quit = true;
+     }
     
-   // call_clear_buff();
+    call_clear_buff();
     start_game();
 }

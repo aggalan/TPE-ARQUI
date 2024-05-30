@@ -89,7 +89,7 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
         fcolor = bcolor;
     }
 
-    move_screen_right();
+//    move_screen_right();
 
     int cx, cy;
     int pos = c - 33;
@@ -431,6 +431,7 @@ void moveRight() {
 }
 
 void move_screen_right() {
+    cursorOff();
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
     for (int i = (VBE_mode_info->height >posY + 3*16*size)? posY + 3*16*size:VBE_mode_info->height; i > posY; i--) {
         for (int j = VBE_mode_info->width-MARGIN-5; j >= MARGIN; j--) {
@@ -470,3 +471,4 @@ uint64_t pixelColorAt(uint32_t x, uint32_t y) {
 
     return hexColor;
 }
+

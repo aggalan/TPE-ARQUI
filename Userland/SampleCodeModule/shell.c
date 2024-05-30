@@ -7,7 +7,7 @@
 
 
 static char buff[BUFFERLIMIT] = {0};
-static char prev_commands[10][BUFFERLIMIT] = {{0}};
+static char prev_commands[COMMAND_SIZE][BUFFERLIMIT] = {{0}};
 static int prev_num = 0;
 static int count_num = 0;
 
@@ -54,53 +54,82 @@ void bufferize(){
 //                print(buff);
 
                 max_pos--;
+                putCh(c);
             }
-            else flag = 1;
+            flag = 1;
         }
         else if(c == '\n'){
             max_pos = 0;
+
+            //antes del newline va a haber que encontrar manera de que cursor se mueva hasta final de comando
+
             putCh(c);
             if( i == 0 && buff[i] == 0){
                clearBuff(buff);
                 return;
             }
 
-//            for (int p = 0; buff[p] != 0; p++) {
-//                prev_commands[count_num][p] = buff[p];
-//            }
-//            count_num++;
+            move_prev_commands();
+            prev_num = 0;
 
 //            buff[i] = 0;
             read_command(buff);
             return;
         } else if (c == 0x7C){
+//            if (i > 0) {
+//                i--;
+//            } else {
+//                flag = 1;
+//            }
             if (i > 0) {
                 i--;
-            } else {
-                flag = 1;
+                putCh(c);
             }
+            flag = 1;
         }
         else if(c == 0x7D) {
 //            putCh(max_pos + '0');
+//            if (i < BUFFERLIMIT && i < max_pos) {
+//                i++;
+//            } else {
+//                flag = 1;
+//            }
             if (i < BUFFERLIMIT && i < max_pos) {
                 i++;
-            } else {
-                flag = 1;
+                putCh(c);
             }
+            flag = 1;
         }
-//        else if (c == 0x7B) {
-//            if (prev_num < count_num) {
-//                clearBuff(buff);
-//                i = 0;
-//                while(prev_commands[prev_num][i] != 0) {
-//                    buff[i] = prev_commands[prev_num][i];
-//                    putCh(buff[i]);
-//                    i++;
-//                }
-//                prev_num++;
-//            }
-//            flag = 1;
-//        }
+        else if (c == 0x7B) {
+            if (prev_num < COMMAND_SIZE-1 && prev_commands[prev_num+1][0] != 0) {
+                delete(i);
+                clearBuff(buff);
+                i = 0;
+                prev_num++;
+                while(prev_commands[prev_num][i] != 0) {
+                    buff[i] = prev_commands[prev_num][i];
+                    putCh(buff[i]);
+                    i++;
+                }
+            }
+            flag = 1;
+
+        }
+        else if (c == 0x7A) {
+            if (prev_num > 0) {
+                delete(i);
+                clearBuff(buff);
+                i = 0;
+                prev_num--;
+                while(prev_commands[prev_num][i] != 0) {
+                    buff[i] = prev_commands[prev_num][i];
+                    putCh(buff[i]);
+                    i++;
+                }
+
+            }
+            flag = 1;
+        }
         else{
             if(!end_buff && c != 0 && max_pos < BUFFERLIMIT-1) {
                 max_pos++;
@@ -109,13 +138,15 @@ void bufferize(){
                     buff[z] = buff[z-1];
                     z--;
                 }
-
+                prev_commands[0][i] = c;
                 buff[i++] = c;
+
             }else {
                 flag = 1;
             }
         }
         if(!flag && c != 0) {
+            call_move_screen_right();
             putCh(c);
         }
 
@@ -128,10 +159,32 @@ void bufferize(){
 
 }
 
+void move_prev_commands() {
+    for (int i = COMMAND_SIZE-1; i > 0; i--) {
+        for (int j = 0; j < BUFFERLIMIT && prev_commands[i-1][j] != 0; j++) {
+            prev_commands[i][j] = prev_commands[i-1][j];
+        }
+    }
+
+    for (int z = 0; z < BUFFERLIMIT && prev_commands[0][z] != 0; z++) {
+        prev_commands[0][z] = 0;
+    }
+
+}
+
 void read_command(char * buff){
     seek_command(buff);
     clearBuff(buff);
 
+}
+
+
+void delete(int i) {
+    int z = i;
+    while (z > 0) {
+        putCh('\b');
+        z--;
+    }
 }
 
 

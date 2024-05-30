@@ -29,6 +29,7 @@ void put_square(uint64_t x, uint64_t y, uint32_t size, uint64_t color);
 void cursorOff();
 void cursorOn();
 uint64_t pixelColorAt(uint32_t x, uint32_t y);
+void delete_line();
 
 #define RED 0xFF0000
 #define WHITE 0xFFFFFF

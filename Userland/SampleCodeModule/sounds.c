@@ -19,13 +19,13 @@ void collision(){
 
 void game_start(){
     call_sound(500, 440); 
-    call_sleepms(500);
+    call_sleepms(10);
 
     call_sound(500, 554); 
-    call_sleepms(500);
+    call_sleepms(10);
 
     call_sound(500, 659);
-    call_sleepms(500);
+    call_sleepms(10);
 }
 
 void game_pause(){

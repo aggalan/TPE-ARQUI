@@ -95,6 +95,9 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 		case 18:
 				buffer_clearAll();
 				break;
+        case 19:
+                move_screen_right();
+                break;
 				
 	}
 }
