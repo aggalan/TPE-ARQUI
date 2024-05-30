@@ -47,16 +47,6 @@ unsigned int player2Deaths = 0;
 
 
 
-typedef struct {
-    uint64_t x, y;
-} Segment;
-
-typedef struct {
-    Segment head;
-    int direction;
-    uint64_t color;
-} Snake;
-
 Snake player1;
 Snake player2;
 uint64_t board[SCREEN_WIDTH][SCREEN_HEIGHT];
@@ -91,8 +81,7 @@ bool quit = false;
 //
 
 void eliminator(){
-    player1Deaths = 0;
-    player2Deaths = 0;
+    speed = DEFAULT_SPEED;
     call_size_up();
     printStart();
     getCh();
@@ -170,7 +159,8 @@ void changeSettings(){
             }
         }
         if(settingsOption == SPEEDKEY){
-            speed++;
+            speed += 1;
+            return;
         }
         if(settingsOption == QUIT)
             return;
@@ -178,6 +168,8 @@ void changeSettings(){
 }
 
 void startGameTwoPlayers(){
+    player1Deaths = 0;
+    player2Deaths = 0;
     initializeGameTwoPlayers();
     
     int pos = call_get_pos();
@@ -194,11 +186,12 @@ void startGameTwoPlayers(){
             printMenu();
             return;
         }
-        call_sleepms(speed);
+        call_sleepms(10/speed);
     }
-    return 0;
+    return;
 }
 void startGameOnePlayer(){
+    player1Deaths = 0;
     initializeGame();
     
     int pos = call_get_pos();
@@ -217,7 +210,7 @@ void startGameOnePlayer(){
         }
         call_sleepms(speed);
     }
-    return 0;
+    return;
 
 }
 
@@ -434,7 +427,7 @@ void drawDeathCounter(){
 void drawMargins(){
     for(int i = 20; i < SCREEN_WIDTH; i++){
         for(int j = 10; j < SCREEN_HEIGHT; j++){
-            if(i == 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || i == SCREEN_WIDTH - 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || j == 10  && i >= 20 && i <= SCREEN_WIDTH - 20 || j == SCREEN_HEIGHT - 10 && i >= 20 && i <= SCREEN_WIDTH - 20){
+            if(i == 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || i == SCREEN_WIDTH - 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || j == 10  && i >= 20 && i <= SCREEN_WIDTH - 20 || j == SCREEN_HEIGHT - 10 && i >= 20 && i <= SCREEN_WIDTH - 20){ //poner bien parentesis
                 board[i][j] = RED;
                 call_put_square(i, j, 5, RED);
             }
