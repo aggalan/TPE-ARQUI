@@ -17,8 +17,7 @@
   <component name="ChangeListManager">
     <list default="true" id="37aa8420-5861-4059-90f8-3d23d40572fb" name="Changes" comment="wkjdbckjwbdc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kernel/syscalls.c" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/syscalls.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kernel/include/keyboardDriver.h" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/include/keyboardDriver.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Userland/SampleCodeModule/shell.c" beforeDir="false" afterPath="$PROJECT_DIR$/Userland/SampleCodeModule/shell.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
