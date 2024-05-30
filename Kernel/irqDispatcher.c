@@ -7,7 +7,7 @@
 #include "soundDriver.h"
 #include "keyboardBuffer.h"
 #include "syscalls.h"
-
+#include "keyboardDriver.h"
 
 static void int_20();
 static void int_21();
@@ -36,7 +36,7 @@ void int_20() {
 
 }
 void int_21(){
-	keyboard_handler();
+	keyboardHandler();
 }
 
 uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t r10){

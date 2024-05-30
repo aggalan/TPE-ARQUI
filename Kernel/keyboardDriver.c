@@ -8,7 +8,7 @@
 
 
 
-void keyboard_handler(){
+void keyboardHandler(){
 
 	uint16_t key = get_key();
 

@@ -98,7 +98,7 @@ static KeyCode ScanCodes[NUM_KEYS] = {
 };
 
 
-void keyboard_handler();
+void keyboardHandler();
 extern int get_key();
 extern int getShiftVal();
 extern void setShift(int i);
