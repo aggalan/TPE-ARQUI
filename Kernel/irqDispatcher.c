@@ -8,6 +8,8 @@
 #include "keyboardBuffer.h"
 #include "syscalls.h"
 #include "keyboardDriver.h"
+#include <stdbool.h>
+bool eliminatorFlag = false;
 
 static void int_20();
 static void int_21();
@@ -28,7 +30,7 @@ void irqDispatcher(uint64_t irq, uint64_t rax, uint64_t rdi, uint64_t rsi, uint6
 
 void int_20() {
 	timer_handler();
-    if (ticks_elapsed() % 21 <= 10) {
+    if (ticks_elapsed() % 21 <= 10 && !eliminatorFlag) {
         cursorOn();
     } else {
         cursorOff();
@@ -98,6 +100,9 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
         case 19:
                 moveScreenRight();
                 break;
+		case 20:
+				eliminatorFlag = true;
+				break;
 		default:
 				return 0;
 				

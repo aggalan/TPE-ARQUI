@@ -29,5 +29,5 @@ char call_get_charAt(int pos);
 void call_clear_buff();
 void call_move_screen_right();
 void call_reg_state();
-
+void call_eliminator_flag_on();
 #endif
