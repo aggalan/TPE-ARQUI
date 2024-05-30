@@ -6,6 +6,7 @@
         "keyboardbuffer.h": "c",
         "keyboarddriver.h": "c",
         "usersyscalls.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "stdio.h": "c"
     }
 }

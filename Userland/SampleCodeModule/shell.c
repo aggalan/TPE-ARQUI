@@ -68,19 +68,16 @@ void bufferize(){
                clearBuff(buff);
                 return;
             }
+            if (prev_num == 0) {
+                move_prev_commands();
+            }
 
-            move_prev_commands();
             prev_num = 0;
 
 //            buff[i] = 0;
             read_command(buff);
             return;
         } else if (c == 0x7C){
-//            if (i > 0) {
-//                i--;
-//            } else {
-//                flag = 1;
-//            }
             if (i > 0) {
                 i--;
                 putCh(c);
@@ -88,12 +85,6 @@ void bufferize(){
             flag = 1;
         }
         else if(c == 0x7D) {
-//            putCh(max_pos + '0');
-//            if (i < BUFFERLIMIT && i < max_pos) {
-//                i++;
-//            } else {
-//                flag = 1;
-//            }
             if (i < BUFFERLIMIT && i < max_pos) {
                 i++;
                 putCh(c);
@@ -161,12 +152,12 @@ void bufferize(){
 
 void move_prev_commands() {
     for (int i = COMMAND_SIZE-1; i > 0; i--) {
-        for (int j = 0; j < BUFFERLIMIT && prev_commands[i-1][j] != 0; j++) {
+        for (int j = 0; j < BUFFERLIMIT; j++) {
             prev_commands[i][j] = prev_commands[i-1][j];
         }
     }
 
-    for (int z = 0; z < BUFFERLIMIT && prev_commands[0][z] != 0; z++) {
+    for (int z = 0; z < BUFFERLIMIT; z++) {
         prev_commands[0][z] = 0;
     }
 
