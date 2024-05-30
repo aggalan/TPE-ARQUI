@@ -44,6 +44,7 @@ void bufferize(){
                 int j = i;
                 while (buff[j] != 0) {
                     buff[j] = buff[j+1];
+                    prev_commands[0][j] = prev_commands[0][j+1];
                     j++;
                 }
 //                buff[i] == 0;
@@ -168,6 +169,9 @@ void readCommand(char * buff){
 void delete(int i) {
     int z = i;
     while (z > 0) {
+        if (buff[z] == '\t') {
+            putCh('\b');
+        }
         putCh('\b');
         z--;
     }
