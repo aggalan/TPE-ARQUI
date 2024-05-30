@@ -131,14 +131,16 @@ void menu(){
         }else if (option == SPACE){
             if(players == 1){
                 startGameOnePlayer();
+                printMenu();
             }else if (players == 2){
                 startGameTwoPlayers();
+                printMenu();
             }
         }else if(option == ENTER){
             changeSettings();
             printMenu();
         }
-    }
+            }
 }
 
 void changeSettings(){
@@ -183,7 +185,7 @@ void startGameTwoPlayers(){
         handleInput(key);
         updateGameTwoPlayers();
         if(quit){
-            printMenu();
+            // printMenu();
             return;
         }
         call_sleepms(10/speed);
@@ -205,7 +207,7 @@ void startGameOnePlayer(){
         handleInput(key);
         updateGameOnePlayer();
         if(quit){
-            printMenu();
+            //printMenu();
             return;
         }
         call_sleepms(speed);
