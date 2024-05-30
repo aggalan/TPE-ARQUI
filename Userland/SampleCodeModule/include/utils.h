@@ -13,5 +13,6 @@ int strcmpspace(char * str1, char * str2);
 void print(char * fmt, ...);
 int strlen(char * str);
 int scan(char * fmt, ...);
+void intToStr(int value, char* str, int base);
 
 #endif
