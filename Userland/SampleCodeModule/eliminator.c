@@ -393,12 +393,12 @@ void drawDeathCounter(){
     intToStr(player2Deaths, deathCount2, 10);
 
     if(players == 1){ //1 jugador
-        call_drawWordColorAt("Player 1 deaths: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
+        call_drawWordColorAt("PLAYER 1: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
         call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT /2 -300);
     }else{
-        call_drawWordColorAt("Player 1 deaths: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
+        call_drawWordColorAt("PLAYER 1: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
         call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT / 2 - 300);
-        call_drawWordColorAt("Player 2 deaths: ",DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 200);
+        call_drawWordColorAt("PLAYER 2: ",DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 200);
         call_drawWordColorAt(deathCount2,  DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT / 2 - 200);
     }    
 }
