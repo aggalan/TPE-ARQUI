@@ -1,7 +1,8 @@
-#include "exceptions.h" //armar
+#include "exceptions.h" 
 #include "registers.h"
-#include "syscall.h"
+#include "syscalls.h"
 #include "videoDriver.h"
+#include "keyboardBuffer.h"
 #define ZERO_EXCEPTION_ID 0
  
 
@@ -9,24 +10,24 @@
 
 void exceptionDispatcher(int exception, registerStruct * registers) {
     if (exception == ZERO_EXCEPTION_ID)
-		zero_division();
+		zeroDivision();
 	else {
-		invalid_op();
+		invalidOp();
 	}
 	printRegisters(registers);
 	drawWordColor("Press a key to continue",WHITE, RED);
 	char c;
 	sys_read(&c, 1, 0);
-    buffer_clear();
+    bufferClear();
 }
 
- void zero_division() {
+ void zeroDivision() {
 	register_snapshot_taken = 1;
 	drawWordColor("ERROR: CANNOT DIVIDE BY ZERO", WHITE, RED);
 	newline();
 }
 
- void invalid_op(){
+ void invalidOp(){
 	register_snapshot_taken = 1;
 	drawWordColor("ERROR: INVALID OPCODE", WHITE, RED);
 	newline();

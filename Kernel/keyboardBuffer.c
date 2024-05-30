@@ -9,7 +9,7 @@ static buffer_ptr ptr = &buff;
 
 int buffer_pos = 0;
 
-void buffer_append(char c) {
+void bufferAppend(char c) {
     if (ptr->pos < BUFFER_LIMIT-1) {
         ptr->buffer[ptr->pos] = c;
         ptr->pos += 1;
@@ -21,7 +21,7 @@ void buffer_append(char c) {
     }
 }
 
-int buffer_len(){
+int bufferLen(){
     return ptr->len;
 }
 
@@ -29,11 +29,11 @@ void setPos(int newPos){
     ptr->pos = newPos;
 }
 
-void buffer_clear() {
+void bufferClear() {
     ptr->len = 0;
 }
 
-void buffer_clearAll(){
+void bufferClearAll(){
     ptr->pos = 0;
     ptr->len = 0;
     for (int i = 0; i < BUFFER_LIMIT; i++) {
@@ -42,11 +42,11 @@ void buffer_clearAll(){
 
 }
 
-int get_pos() {
+int getPos() {
     return ptr->pos;
 }
 
-uint16_t * get_buff() {
+uint16_t * getBuff() {
     return ptr->buffer;
 }
 

@@ -1,12 +1,12 @@
 #include <time.h>
 #include <stdint.h>
 #include <naiveConsole.h>
-#include "syscall.h"
 #include "videoDriver.h"
 #include "registers.h"
 #include "interrupts.h"
 #include "soundDriver.h"
 #include "keyboardBuffer.h"
+#include "syscalls.h"
 
 
 static void int_20();
@@ -54,10 +54,10 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 				printRegistersASM(); 
 				break;
 		case 5: 
-				size_up();
+				sizeUp();
 				break;
 		case 6: 
-				size_down();
+				sizeDown();
 				break;
 		case 7: 
 				clear();
@@ -75,7 +75,7 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 				drawWordColorAt((char *)rdi, rsi, rdx, r10);
 				break;
 		case 12:
-				put_square(rdi, rsi, rdx, r10);
+				putSquare(rdi, rsi, rdx, r10);
 				break;
 		case 13:
 				sleepms(rdi);
@@ -87,17 +87,20 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
 				pixelColorAt(rdi, rsi);
 				break;
 		case 16:
-				return get_pos();
+				return getPos();
 				break;
 		case 17:
 				return getBuffCharAt(rdi);
 				break;
 		case 18:
-				buffer_clearAll();
+				bufferClearAll();
 				break;
         case 19:
-                move_screen_right();
+                moveScreenRight();
                 break;
+		default:
+				return 0;
 				
 	}
+	return 0;
 }

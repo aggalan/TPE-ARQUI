@@ -1,5 +1,5 @@
 #include <naiveConsole.h>
-#include <syscall.h>
+#include <syscalls.h>
 #include <keyboardBuffer.h>
 #include <videoDriver.h>
 #include <keyboardDriver.h>
@@ -7,20 +7,20 @@
 
 static int shift = 0;
 
-void set_shift(int i) {
+void setShift(int i) {
     shift = i;
 }
 
-int get_shift_val() {
+int getShiftVal() {
     return shift;
 }
 
-void sys_write(const char * buff, int len, int fd){
+void sys_write(char * buff, int len, int fd){
 
-    if(fd == 1){
+    if(fd == STDOUT){
         drawWordLen(buff, len);
         
-    } else if(fd == 2){
+    } else if(fd == STDERR){
         drawWordColorLen(buff, WHITE, RED, len);
     }else
     invalidFD();
@@ -31,7 +31,7 @@ void sys_read(char * c, int len, int fd){
 
     int i;
 
-    if (fd == 0) {
+    if (fd == STDIN) {
         char aux = 0;
         for (i = 0; i < len;) {
             _hlt();

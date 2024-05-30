@@ -13,16 +13,16 @@ struct kbuff {
 
 typedef struct kbuff * buffer_ptr;
 
-void buffer_append(char c);
-void buffer_clear();
-void buffer_backspace();
-int get_pos();
-uint16_t * get_buff();
+void bufferAppend(char c);
+void bufferClear();
+void bufferBackspace();
+int getPos();
+uint16_t * getBuff();
 char getBuffAtCurrent();
-void consume_char();
-int buffer_len();
+void consumeChar();
+int bufferLen();
 void setPos(int newPos);
 uint16_t getBuffCharAt(int pos);
-void buffer_clearAll();
-
+void bufferClearAll();
+void consume();
 #endif

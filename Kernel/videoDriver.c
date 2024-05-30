@@ -1,7 +1,6 @@
 #include <videoDriver.h>
 #include <stdint.h>
 #include <keyboardBuffer.h>
-#include <keyboardDriver.h>
 #include <font.h>
 #include "naiveConsole.h"
 
@@ -64,8 +63,8 @@ void putPixel(uint64_t hexColor, uint64_t x, uint64_t y) {
     framebuffer[offset+2]   =  (hexColor >> 16) & 0xFF;
 }
 
-void drawchar_transparent(char c, uint64_t fcolor) {
-    drawchar_color(c, fcolor, BLACK);
+void drawCharTransparent(char c, uint64_t fcolor) {
+    drawCharColor(c, fcolor, BLACK);
 }
 
 void clear() {
@@ -79,7 +78,7 @@ void clear() {
     posY = MARGIN;
 }
 
-void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
+void drawCharColor(char c, uint64_t fcolor, uint64_t bcolor) {
     cursorOff();
     if (posX >= VBE_mode_info->width-(16*size)-MARGIN && posY >= VBE_mode_info->height-(32*size)-MARGIN) {
         move_screen();
@@ -144,7 +143,7 @@ void drawchar_color(char c, uint64_t fcolor, uint64_t bcolor) {
 
 }
 
-void put_square(uint64_t x, uint64_t y, uint32_t size, uint64_t color) {
+void putSquare(uint64_t x, uint64_t y, uint32_t size, uint64_t color) {
     for (uint32_t i = 0; i < size; i++) {
         for (uint32_t j = 0; j < size; j++) {
             putPixel(color, x + j, y + i);
@@ -175,7 +174,7 @@ void character(char character, uint64_t fcolor, uint64_t bcolor){
         return;
     }
 
-    drawchar_color(character, fcolor, bcolor);
+    drawCharColor(character, fcolor, bcolor);
     return;
 }
 
@@ -342,7 +341,7 @@ void move_screen() {
     }
 }
 
-void size_up(){
+void sizeUp(){
     if(size == 3){
         drawWordColor("ERROR - Font size already at 3\n", WHITE, RED);
         return;
@@ -354,7 +353,7 @@ void size_up(){
     return;
 }
 
-void size_down(){
+void sizeDown(){
     if(size == 1){
         drawWordColor("ERROR - Font size already at 1\n", WHITE, RED);
         return;
@@ -430,7 +429,7 @@ void moveRight() {
     posX += 10*size;
 }
 
-void move_screen_right() {
+void moveScreenRight() {
     cursorOff();
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
     for (int i = (VBE_mode_info->height >posY + 3*16*size)? posY + 3*16*size:VBE_mode_info->height; i > posY; i--) {

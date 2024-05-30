@@ -427,13 +427,17 @@ void drawDeathCounter(){
 void drawMargins(){
     for(int i = 20; i < SCREEN_WIDTH; i++){
         for(int j = 10; j < SCREEN_HEIGHT; j++){
-            if(i == 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || i == SCREEN_WIDTH - 20 && j >= 10 && j <= SCREEN_HEIGHT - 10 || j == 10  && i >= 20 && i <= SCREEN_WIDTH - 20 || j == SCREEN_HEIGHT - 10 && i >= 20 && i <= SCREEN_WIDTH - 20){ //poner bien parentesis
+            if((i == 20 && j >= 10 && j <= SCREEN_HEIGHT - 10) ||
+               (i == SCREEN_WIDTH - 20 && j >= 10 && j <= SCREEN_HEIGHT - 10) ||
+               (j == 10 && i >= 20 && i <= SCREEN_WIDTH - 20) ||
+               (j == SCREEN_HEIGHT - 10 && i >= 20 && i <= SCREEN_WIDTH - 20)){
                 board[i][j] = RED;
                 call_put_square(i, j, 5, RED);
             }
         }
     }
 }
+
 
 void gameOver(){
     collision();

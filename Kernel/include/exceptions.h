@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 void exceptionDispatcher(int exception, registerStruct * registers);
-void zero_division();
-void invalid_op();
+void zeroDivision();
+void invalidOp();
 
 #endif

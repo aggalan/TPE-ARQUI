@@ -16,19 +16,19 @@ void keyboard_handler(){
         return;
     }
 
-    if (get_shift_val() == 0 && key == 0x2A) {
-        set_shift(1);
+    if (getShiftVal() == 0 && key == 0x2A) {
+        setShift(1);
         return;
-    } else if (get_shift_val() == 1 && key == 0xAA) {
-        set_shift(0);
+    } else if (getShiftVal() == 1 && key == 0xAA) {
+        setShift(0);
         return;
     }
 
-    if (get_shift_val() == 0 && key == 0x36) {
-        set_shift(2);
+    if (getShiftVal() == 0 && key == 0x36) {
+        setShift(2);
         return;
-    } else if (get_shift_val() == 2 && key == 0xB6) {
-        set_shift(0);
+    } else if (getShiftVal() == 2 && key == 0xB6) {
+        setShift(0);
         return;
     }
 
@@ -51,7 +51,7 @@ void keyboard_handler(){
     }
 
     if (key != 0x2A && key != 0x36 ) {
-        buffer_append(key);
+        bufferAppend(key);
     }
     
 

@@ -6,6 +6,7 @@
 #include <syscalls.h>
 #include <videoDriver.h>
 #include <font.h>
+#include "idtLoader.h"
 
 extern uint8_t text;
 extern uint8_t rodata;

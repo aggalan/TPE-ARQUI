@@ -7,6 +7,9 @@
         "keyboarddriver.h": "c",
         "usersyscalls.h": "c",
         "stdint.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "syscall.h": "c",
+        "syscalls.h": "c",
+        "videodriver.h": "c"
     }
 }
