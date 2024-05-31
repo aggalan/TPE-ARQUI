@@ -91,8 +91,10 @@ void drawCharColor(char c, uint64_t fcolor, uint64_t bcolor) {
     if (c == ' ') {
         fcolor = bcolor;
     }
+    if (cursor_pos != 0) {
+        moveScreenRight();
+    }
 
-//    move_screen_right();
 
     int cx, cy;
     int pos = c - 33;

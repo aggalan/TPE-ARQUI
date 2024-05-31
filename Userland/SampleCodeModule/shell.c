@@ -133,7 +133,7 @@ void bufferize(){
             }
         }
         if(!flag && c != 0) {
-            call_move_screen_right();
+//            call_move_screen_right();
             putCh(c);
         }
 
