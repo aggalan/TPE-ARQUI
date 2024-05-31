@@ -99,8 +99,7 @@ void bufferize(){
                     i++;
                 }
             }
-            flag = 1;
-
+            flag = 0;
         }
         else if (c == 0x7B) {
             if (prev_num > 0) {
@@ -113,9 +112,8 @@ void bufferize(){
                     putCh(buff[i]);
                     i++;
                 }
-
             }
-            flag = 1;
+            flag = 0;
         } else if (c == 0x1B) {
             flag = 1;
         }

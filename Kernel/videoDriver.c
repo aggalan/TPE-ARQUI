@@ -54,6 +54,8 @@ int size = DEFAULT_FONT_SIZE;
 
 static int cursor_flag = 1;
 
+int cursor_pos = 0;
+
 uint64_t defaultFColor = WHITE;
 uint64_t defaultBColor = BLACK;
 
@@ -175,6 +177,10 @@ void character(char character, uint64_t fcolor, uint64_t bcolor){
         moveRight();
         return;
     }
+    if (character == 0x7F || character == 0x7B) {
+        cursor_pos = 0;
+        return;
+    }
 
     drawCharColor(character, fcolor, bcolor);
     return;
@@ -243,7 +249,13 @@ void backspace() {
         }
     }
 
+    if (cursor_pos != 0) {
+        backspace_move();
+    }
+    posX -= 10*size;
+}
 
+void backspace_move() {
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
 
     for (int i = posY; i < VBE_mode_info->height && i < posY + 3*16*size; i++) {
@@ -269,14 +281,12 @@ void backspace() {
 
         }
     }
-
-
-
-    posX -= 10*size;
 }
+
 
 void newline() {
     cursorOff();
+    cursor_pos = 0;
     if (posY >= VBE_mode_info->height-(32*size)-MARGIN) {
         move_screen();
     }
@@ -424,6 +434,7 @@ void moveLeft() {
         posX = VBE_mode_info->width - MARGIN-4;
         posY -= 16 * size;
     }
+    cursor_pos--;
     posX -= 10*size;
 }
 
@@ -434,6 +445,7 @@ void moveRight() {
         posY += 16 * size;
         return;
     }
+    cursor_pos++;
     posX += 10*size;
 }
 
