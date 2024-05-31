@@ -14,6 +14,8 @@
 #define DEFAULT_SPEED 2
 #define DEFAULT_PLAYERS 2
 
+
+
 typedef struct {
     uint64_t x, y;
 } Segment;

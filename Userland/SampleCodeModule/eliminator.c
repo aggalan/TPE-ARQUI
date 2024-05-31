@@ -36,6 +36,8 @@ uint64_t SPEEDKEYUP = 0x20;
 uint64_t SPEEDKEYDOWN = 0x1F;
 uint64_t PLAYERSKEY = 0x19;
 uint64_t ESC = 0x01;
+uint64_t ONEPLAYER = 0x02;
+uint64_t TWOPLAYERS = 0x03;
 
 uint32_t CONFIG_X;
 uint32_t CONFIG_Y;
@@ -56,7 +58,7 @@ bool quit = false;
 
 
 void eliminator(){
-    speed = DEFAULT_SPEED;
+    speed = DEFAULT_SPEED; 
     call_size_up();
     printStart();
     getCh();
@@ -76,14 +78,13 @@ void printMenu(){
     intToStr(players, playerStr, 10);
     intToStr(speed, speedStr, 10);
     call_paint_screen(BLACK);
-    call_drawWordColorAt("PLAYERS: ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
-    call_drawWordColorAt(playerStr, DEFAULT_FCOLOR, MENU_X + 175, MENU_Y);
-    call_drawWordColorAt("SPEED: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 64);
-    call_drawWordColorAt(speedStr, DEFAULT_FCOLOR, MENU_X + 125, MENU_Y + 64);
+    call_drawWordColorAt("SPEED: ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
+    call_drawWordColorAt(speedStr, DEFAULT_FCOLOR, MENU_X + 175, MENU_Y);
     // call_drawWordColorAt("LEVEL: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
-    call_drawWordColorAt("[SPACE] to begin game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
-    call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
-    call_drawWordColorAt("[ESC] to return to the shell\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 384);
+    call_drawWordColorAt("[1] to begin single player game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
+    call_drawWordColorAt("[2] to begin multiplayer local game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
+    call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 384);
+    call_drawWordColorAt("[ESC] to return to the shell\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 448);
 }
 
 void printSettings(){
@@ -106,14 +107,21 @@ void menu(){
         option = call_get_charAt(posMenu-1);
         if(option == ESC){
             return;
-        }else if (option == SPACE){
-            if(players == 1){
-                startGameOnePlayer();
-                printMenu();
-            }else if (players == 2){
-                startGameTwoPlayers();
-                printMenu();
+        }else if (option == ONEPLAYER){
+            if(players != 1){
+                player1Deaths = 0;
             }
+            players = 1;
+            startGameOnePlayer();
+            printMenu();
+        }else if (option == TWOPLAYERS){
+            if(players != 2){
+                player1Deaths = 0;
+                player2Deaths = 0;
+            }
+            players = 2;
+            startGameTwoPlayers();
+            printMenu();
         }else if(option == ENTER){
             changeSettings();
             printMenu();
@@ -258,23 +266,8 @@ void handleInput(char key) {
                 return;
             }
         }
-        // else if(key == PLAYERSKEY){
-        //     pause();
-        // }
 }
 
-// void pause(){
-//     int posPause = call_get_pos();
-//     char keyPause;
-    
-//     while (1) {
-//         keyPause = call_get_charAt(posPause-1);  // Obtener entrada del teclado (bloqueante)
-//         if(keyPause == QUIT){
-//             return;
-//         }
-//     }
-
-// }
 
 void initializeGame(){
     for(int i = 0; i < SCREEN_WIDTH; i++){
@@ -387,12 +380,12 @@ void drawDeathCounter(){
     intToStr(player2Deaths, deathCount2, 10);
 
     if(players == 1){ //1 jugador
-        call_drawWordColorAt("PLAYER 1: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
-        call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT /2 -300);
+        call_drawWordColorAt("PLAYER 1 DEATHS: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
+        call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT /2 - 300);
     }else{
-        call_drawWordColorAt("PLAYER 1: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
+        call_drawWordColorAt("PLAYER 1 DEATHS: ", DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 300);
         call_drawWordColorAt(deathCount1, DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT / 2 - 300);
-        call_drawWordColorAt("PLAYER 2: ",DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 200);
+        call_drawWordColorAt("PLAYER 2 DEATHS: ",DEFAULT_FCOLOR, SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT / 2 - 200);
         call_drawWordColorAt(deathCount2,  DEFAULT_FCOLOR, SCREEN_WIDTH/2 + 75, SCREEN_HEIGHT / 2 - 200);
     }    
 }
