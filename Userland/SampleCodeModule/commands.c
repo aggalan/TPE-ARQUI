@@ -36,9 +36,9 @@ void callCommand(int i, char * command){
             invalidOpASM();
             return;
         case ELIMINATOR:;
-            call_eliminator_flag_on();
-            eliminator();
             call_eliminator_flag_off();
+            eliminator();
+            call_eliminator_flag_on();
             return;
         case INCFONT:;
             call_size_up();

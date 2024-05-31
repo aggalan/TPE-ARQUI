@@ -52,6 +52,8 @@ uint32_t posY = MARGIN;
 
 int size = DEFAULT_FONT_SIZE;
 
+static int cursor_flag = 1;
+
 uint64_t defaultFColor = WHITE;
 uint64_t defaultBColor = BLACK;
 
@@ -395,6 +397,9 @@ void intToStr(int value, char* str, int base) {
 }
 
 void cursorOff() {
+    if (cursor_flag == 0) {
+        return;
+    }
     for (int i = 0; i < 10; i++) {
         for (int z = 0; z < size; z++) {
             putPixel(0x00000000, i*size + posX + z, posY + 16*size - 1);
@@ -403,6 +408,9 @@ void cursorOff() {
 }
 
 void cursorOn() {
+    if (cursor_flag == 0) {
+        return;
+    }
     for (int i = 0; i < 10; i++) {
         for (int z = 0; z < size; z++) {
             putPixel(0x00FFFFFF, i*size + posX + z, posY + 16*size - 1);
@@ -469,5 +477,9 @@ uint64_t pixelColorAt(uint32_t x, uint32_t y) {
     uint64_t hexColor = (red << 16) | (green << 8) | blue;
 
     return hexColor;
+}
+
+void set_cursor_flag(int i) {
+    cursor_flag = i;
 }
 

@@ -33,6 +33,7 @@ void deleteLine();
 void moveLeft();
 void moveRight();
 void moveScreenRight();
+void set_cursor_flag(int i);
 
 #define RED 0xFF0000
 #define WHITE 0xFFFFFF

@@ -116,6 +116,8 @@ void bufferize(){
 
             }
             flag = 1;
+        } else if (c == 0x1B) {
+            flag = 1;
         }
         else{
             if(!end_buff && c != 0 && max_pos < BUFFERLIMIT-1) {

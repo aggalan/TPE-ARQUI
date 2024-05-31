@@ -9,6 +9,7 @@
 
 
 void exceptionDispatcher(int exception, registerStruct * registers) {
+    set_cursor_flag(0);
     if (exception == ZERO_EXCEPTION_ID)
 		zeroDivision();
 	else {
@@ -19,6 +20,7 @@ void exceptionDispatcher(int exception, registerStruct * registers) {
 	char c;
 	sys_read(&c, 1, 0);
     bufferClear();
+    set_cursor_flag(1);
 }
 
  void zeroDivision() {
