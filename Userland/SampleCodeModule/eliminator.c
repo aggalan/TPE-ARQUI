@@ -89,7 +89,6 @@ void printMenu(){
 
 void printSettings(){
     call_paint_screen(BLACK);
-    call_drawWordColorAt("[P] to change player number ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
     call_drawWordColorAt("[S] to decrease game speed ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 64);
     call_drawWordColorAt("[D] to increase game speed ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
     call_drawWordColorAt("[Q] to return to menu", DEFAULT_FCOLOR, MENU_X, MENU_Y + 192);
@@ -136,16 +135,6 @@ void changeSettings(){
     while(1){
         settingsPos = call_get_pos();
         settingsOption = call_get_charAt(settingsPos - 1);
-        if(settingsOption == PLAYERSKEY){
-            if(players == 1){
-                players = 2;
-                return;
-            }
-            else if(players == 2){
-                players = 1; 
-                return;
-            }
-        }
         if(settingsOption == SPEEDKEYUP){
             if(speed < 5)
                 speed += 1;
