@@ -51,6 +51,7 @@ unsigned int player2Deaths = 0;
 Snake player1;
 Snake player2;
 uint64_t board[SCREEN_WIDTH][SCREEN_HEIGHT];
+int speeds[5] = {50, 35, 25, 13, 1};
 bool quit = false;
 
 
@@ -169,7 +170,7 @@ void startGameTwoPlayers(){
             // printMenu();
             return;
         }
-        call_sleepms(10/speed);
+        call_sleepms(speeds[speed-1]);
     }
     return;
 }
@@ -190,7 +191,7 @@ void startGameOnePlayer(){
             //printMenu();
             return;
         }
-        call_sleepms(speed);
+        call_sleepms(speeds[speed-1]);
     }
     return;
 
@@ -326,16 +327,16 @@ bool updateSnake(Snake *snake) {
 
     switch (snake->direction){
         case UP:
-            snake->head.y -= PLAYER_SIZE + 1;
+            snake->head.y -= PLAYER_SIZE ;
             break;
         case DOWN:
-            snake->head.y += PLAYER_SIZE + 1;
+            snake->head.y += PLAYER_SIZE;
             break;
         case LEFT:
-            snake->head.x -= PLAYER_SIZE + 1;
+            snake->head.x -= PLAYER_SIZE;
             break;
         case RIGHT:
-            snake->head.x += PLAYER_SIZE + 1;
+            snake->head.x += PLAYER_SIZE;
             break;
     }
 
@@ -363,14 +364,6 @@ void updateGameOnePlayer(){
 void updateGameTwoPlayers() {
     bool player1Status = updateSnake(&player1);
     bool player2Status = updateSnake(&player2);
-    if(player1Status && player2Status){
-        player1Deaths++;
-        player2Deaths++;
-        gameOver();
-        if(quit){
-            return;
-        }
-    }else{
         if(player1Status){
             player1Deaths++;
             gameOver();
@@ -387,7 +380,6 @@ void updateGameTwoPlayers() {
             }
         }
     }
-}
 
 void drawDeathCounter(){
     char deathCount1[5], deathCount2[5];
