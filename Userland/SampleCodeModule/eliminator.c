@@ -80,7 +80,6 @@ void printMenu(){
     call_paint_screen(BLACK);
     call_drawWordColorAt("SPEED: ", DEFAULT_FCOLOR, MENU_X, MENU_Y);
     call_drawWordColorAt(speedStr, DEFAULT_FCOLOR, MENU_X + 175, MENU_Y);
-    // call_drawWordColorAt("LEVEL: ", DEFAULT_FCOLOR, MENU_X, MENU_Y + 128);
     call_drawWordColorAt("[1] to begin single player game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 256);
     call_drawWordColorAt("[2] to begin multiplayer local game\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 320);
     call_drawWordColorAt("[ENTER] to change settings\n", DEFAULT_FCOLOR, MENU_X, MENU_Y + 384);
@@ -164,7 +163,6 @@ void startGameTwoPlayers(){
         handleInput(key);
         updateGameTwoPlayers();
         if(quit){
-            // printMenu();
             return;
         }
         call_sleepms(speeds[speed-1]);
