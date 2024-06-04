@@ -475,3 +475,15 @@ void set_cursor_flag(int i) {
     cursor_flag = i;
 }
 
+void printImage() {
+    int x = VBE_mode_info->width - NOSOTROS_WIDTH;
+    int y = 0;
+    for (int i =0; i < NOSOTROS_HEIGHT * NOSOTROS_WIDTH;i++) {
+        putPixel(NOSOTROS[i], x++, y);
+        if (x == NOSOTROS_WIDTH + VBE_mode_info->width - NOSOTROS_WIDTH) {
+            x = VBE_mode_info->width - NOSOTROS_WIDTH;
+            y++;
+        }
+    }
+}
+

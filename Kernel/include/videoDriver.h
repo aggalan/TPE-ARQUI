@@ -34,6 +34,7 @@ void moveLeft();
 void moveRight();
 void moveScreenRight();
 void set_cursor_flag(int i);
+void printImage();
 
 #define RED 0xFF0000
 #define WHITE 0xFFFFFF
