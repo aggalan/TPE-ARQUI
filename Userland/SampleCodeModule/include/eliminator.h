@@ -11,7 +11,7 @@
 #define LEFT 2
 #define RIGHT 3
 #define DEFAULT_LEVEL 1
-#define DEFAULT_SPEED 2
+#define DEFAULT_SPEED 3
 #define DEFAULT_PLAYERS 2
 
 
