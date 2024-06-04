@@ -85,7 +85,7 @@ void clear() {
 void drawCharColor(char c, uint64_t fcolor, uint64_t bcolor) {
     cursorOff();
     if (posX >= VBE_mode_info->width-(16*size)-MARGIN && posY >= VBE_mode_info->height-(32*size)-MARGIN) {
-        move_screen();
+        moveScreen();
     }
 
     if (c == ' ') {
@@ -232,12 +232,12 @@ void backspace() {
     }
 
     if (cursor_pos != 0) {
-        backspace_move();
+        backspaceMove();
     }
     posX -= 10*size;
 }
 
-void backspace_move() {
+void backspaceMove() {
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
 
     for (int i = posY; i < VBE_mode_info->height && i < posY + 3*16*size; i++) {
@@ -270,7 +270,7 @@ void newline() {
     cursorOff();
     cursor_pos = 0;
     if (posY >= VBE_mode_info->height-(32*size)-MARGIN) {
-        move_screen();
+        moveScreen();
     }
     posX = MARGIN;
     posY += 16*size;
@@ -312,7 +312,7 @@ void clearColor(uint64_t color){
 
 }
 
-void move_screen() {
+void moveScreen() {
     posY -= 16*size;
 
     uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
@@ -471,7 +471,7 @@ uint64_t pixelColorAt(uint32_t x, uint32_t y) {
     return hexColor;
 }
 
-void set_cursor_flag(int i) {
+void setCursorFlag(int i) {
     cursor_flag = i;
 }
 

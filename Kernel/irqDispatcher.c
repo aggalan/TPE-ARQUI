@@ -100,10 +100,10 @@ uint64_t int_80(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t
                 moveScreenRight();
                 break;
 		case 20:
-                set_cursor_flag(1);
+                setCursorFlag(1);
 				break;
 		case 21:
-                set_cursor_flag(0);
+                setCursorFlag(0);
 				break;
         case 22:
                 printImage();

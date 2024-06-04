@@ -33,7 +33,7 @@ void deleteLine();
 void moveLeft();
 void moveRight();
 void moveScreenRight();
-void set_cursor_flag(int i);
+void setCursorFlag(int i);
 void printImage();
 
 #define RED 0xFF0000

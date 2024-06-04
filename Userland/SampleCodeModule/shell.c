@@ -17,8 +17,6 @@ void welcomeMessage(){
         putCh(welcome_message[i]);
     }
 
-    call_print_image();
-
 }
 
 void lineStart(){
