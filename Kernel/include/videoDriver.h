@@ -33,6 +33,7 @@ void deleteLine();
 void moveLeft();
 void moveRight();
 void moveScreenRight();
+void moveScreen();
 void setCursorFlag(int i);
 void printImage();
 
