@@ -18,7 +18,6 @@
     <list default="true" id="37aa8420-5861-4059-90f8-3d23d40572fb" name="Changes" comment="fixing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kernel/videoDriver.c" beforeDir="false" afterPath="$PROJECT_DIR$/Kernel/videoDriver.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Userland/SampleCodeModule/shell.c" beforeDir="false" afterPath="$PROJECT_DIR$/Userland/SampleCodeModule/shell.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -122,18 +122,30 @@ void drawCharColor(char c, uint64_t fcolor, uint64_t bcolor) {
 
     for (cy = 0; cy < 16; cy++) {
         int maskCheck = 0x01;
+        int maskCheck2 = 0x01;
         for (cx = 0; cx < 10; cx++) {
             if (((font[(pos*32) + (2*cy)] & (maskCheck << cx)) != 0) && cx < 8) {
 
                 for (int z = 0; z < size; z++) {
-                    putPixel(fcolor, cx*size + posX + z, cy*size + posY);
+                    for (int w = 0; w < size; w++) {
+                        putPixel(fcolor, cx*size + posX + z, cy*size + posY + w);
+                    }
                 }
 
             }
+//            else if (((font[(pos*32) + (2*cy) + 1] & (maskCheck2 << (cx-8))) != 0) && cx >= 8) {
+//                for (int z = 0; z < size; z++) {
+//                    for (int w = 0; w < size; w++) {
+//                        putPixel(fcolor, cx*size + posX + z, cy*size + posY + w);
+//                    }
+//                }
+//            }
             else {
 
-                for (int w = 0; w < size; w++) {
-                    putPixel(bcolor, cx*size + posX + w, cy*size + posY);
+                for (int z = 0; z < size; z++) {
+                    for (int w = 0; w < size; w++) {
+                        putPixel(bcolor, cx*size + posX + z, cy*size + posY + w);
+                    }
                 }
 
             }
@@ -241,7 +253,7 @@ void backspace() {
     }
     cursorOff();
     if (posX <= MARGIN) {
-        posX = VBE_mode_info->width-MARGIN-(4*size);
+        posX = VBE_mode_info->width-MARGIN-4;
         posY -= 16*size;
     }
     int i, j;
@@ -356,8 +368,7 @@ void move_screen() {
 }
 
 void sizeUp(){
-    if(size == 3){
-        drawWordColor("ERROR - Font size already at 3\n", WHITE, RED);
+    if(size == 2){
         return;
     }else{
         size++;
@@ -369,7 +380,6 @@ void sizeUp(){
 
 void sizeDown(){
     if(size == 1){
-        drawWordColor("ERROR - Font size already at 1\n", WHITE, RED);
         return;
     }else{
         size--;
@@ -378,13 +388,13 @@ void sizeDown(){
     return;
 }
 void fontSize() {
-    char sizeStr[12];  
-    intToStr(size, sizeStr, 10);  
+    char sizeStr[12];
+    intToStr(size, sizeStr, 10);
 
     drawWordColor("Font size is ", WHITE, BLACK);
     drawWord(sizeStr);
     drawChar('\n');
-    drawWordColor("Maximum font size is 3, minimum font size is 1\n", WHITE, BLACK);
+    drawWordColor("Maximum font size is 2, minimum font size is 1\n", WHITE, BLACK);
 }
 
 void intToStr(int value, char* str, int base) {
