@@ -39,16 +39,13 @@ void bufferize(){
                 if (buff[--i] == '\t') {
                     putCh('\b');
                 }
-//                putCh('\n');
-//                print(buff);
+
                 int j = i;
                 while (buff[j] != 0) {
                     buff[j] = buff[j+1];
                     prev_commands[0][j] = prev_commands[0][j+1];
                     j++;
                 }
-//                buff[i] == 0;
-//                print(buff);
                 max_pos--;
                 putCh(c);
             }
@@ -56,9 +53,6 @@ void bufferize(){
         }
         else if(c == '\n'){
             max_pos = 0;
-
-            //antes del newline va a haber que encontrar manera de que cursor se mueva hasta final de comando
-
             putCh(c);
             if( i == 0 && buff[i] == 0){
                clearBuff(buff);
@@ -70,19 +64,22 @@ void bufferize(){
 
             prev_num = 0;
 
-//            buff[i] = 0;
             readCommand(buff);
             return;
         } else if (c == 0x7C){
             if (i > 0) {
-                i--;
+                if (buff[--i] == '\t') {
+                    putCh(c);
+                }
                 putCh(c);
             }
             flag = 1;
         }
         else if(c == 0x7D) {
             if (i < BUFFERLIMIT && i < max_pos) {
-                i++;
+                if (buff[++i] == '\t') {
+                    putCh(c);
+                }
                 putCh(c);
             }
             flag = 1;
@@ -133,7 +130,6 @@ void bufferize(){
             }
         }
         if(!flag && c != 0) {
-//            call_move_screen_right();
             putCh(c);
         }
 
@@ -167,6 +163,10 @@ void readCommand(char * buff){
 
 
 void delete(int i) {
+    while (buff[i] != 0) {
+        putCh(0x7D);
+        i++;
+    }
     int z = i;
     while (z > 0) {
         if (buff[z] == '\t') {

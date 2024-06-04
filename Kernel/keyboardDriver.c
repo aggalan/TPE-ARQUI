@@ -32,17 +32,6 @@ void keyboardHandler(){
         return;
     }
 
-//    if (key == 0x3A && get_shift_val() != 0) {
-//        set_shift(0);
-//        return;
-//    } else if (key == 0x3A && get_shift_val() == 0) {
-//        set_shift(1);
-//        return;
-//    }
-
-
-
-
 
     if(ScanCodes[key].make == ';'){
         saveRegState();

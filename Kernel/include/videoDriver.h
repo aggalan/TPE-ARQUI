@@ -40,5 +40,4 @@ void set_cursor_flag(int i);
 #define BLACK 0x000000
 #define MARGIN 10
 #define DEFAULT_FONT_SIZE 1
-#define isMinusc(x) ((x) <= 'a' ? (((x)>= 'z')?1:0):0)
 #endif

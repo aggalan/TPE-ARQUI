@@ -98,27 +98,6 @@ void drawCharColor(char c, uint64_t fcolor, uint64_t bcolor) {
 
     int cx, cy;
     int pos = c - 33;
-    if(isMinusc(c)){
-        pos = c - 'a';
-    }
-//    for (cy = 0; cy < 16; cy++) {
-//        int maskCheck = 0x01;
-//        for (cx = 0; cx < 10; cx++) {
-//            if (((font[(pos*32) + (2*cy)] & (maskCheck << cx)) != 0) && cx < 8) {
-//                putPixel(fcolor, cx + posX, cy + posY);
-//            } else {
-//                putPixel(bcolor, cx + posX, cy + posY);
-//            }
-//        }
-//    }
-//    if (posX >= VBE_mode_info->width-MARGIN-16) {
-//        posY += 16;
-//        posX = MARGIN;
-//        return;
-//    }
-//
-//    posX += 10;
-
 
     for (cy = 0; cy < 16; cy++) {
         int maskCheck = 0x01;
@@ -133,13 +112,6 @@ void drawCharColor(char c, uint64_t fcolor, uint64_t bcolor) {
                 }
 
             }
-//            else if (((font[(pos*32) + (2*cy) + 1] & (maskCheck2 << (cx-8))) != 0) && cx >= 8) {
-//                for (int z = 0; z < size; z++) {
-//                    for (int w = 0; w < size; w++) {
-//                        putPixel(fcolor, cx*size + posX + z, cy*size + posY + w);
-//                    }
-//                }
-//            }
             else {
 
                 for (int z = 0; z < size; z++) {
@@ -225,10 +197,6 @@ void drawWordColor(char * string, uint64_t fColor, uint64_t bColor){
     }
 
 }
-
-// void fill(uint64_t x, uint64_t y, uint64_t color) {
-
-// }
 
 void transparent_space() {
     if (posX >= VBE_mode_info->width-(10*size)) {

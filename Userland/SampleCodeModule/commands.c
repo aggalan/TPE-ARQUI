@@ -62,7 +62,7 @@ void callCommand(int i, char * command){
 void help(){
     call_sys_write("Available commands:\n", 20, 1);
     for(int i = 0; i < COMMANDS_SIZE; i++){
-        call_sys_write(commands[i], 12, 1); //esto deberia ser un printf no un call sys write creo, porque cada uno se caga
+        call_sys_write(commands[i], 12, 1);
         call_sys_write("\n", 1, 1);
     }
 }
